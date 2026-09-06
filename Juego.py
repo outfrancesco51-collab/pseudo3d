@@ -255,6 +255,43 @@ class Juego:
             x_temp+=8
 
     def print_hud(self):
+        #checkpoint
+        x0=int(self.screen.get_width()) *0.98
+        x=x0
+        y0=50
+        y=y0
+        rect = self.resources.barra_top.get_rect(midtop=(x, y))
+        self.screen.blit(self.resources.barra_top,rect)
+        y+=7
+        for i in range(75):
+            rect = self.resources.barra_middle.get_rect(midtop=(x, y))
+            self.screen.blit(self.resources.barra_middle,rect)
+            y+=7
+        rect = self.resources.barra_bottom.get_rect(midtop=(x, y))
+        self.screen.blit(self.resources.barra_bottom,rect)
+
+        #calcular progreso (% coche.z desde checkpoint anterior y checkpoint posterior)
+
+        last_check=0.0
+        next_check=self.context.road.segments[-1].z+self.context.road.segments[-1].length
+        for item in self.context.checkpoints:
+            if self.context.player.z>=item:
+                last_check=item
+            else:
+                next_check=item
+                break
+
+
+        recorrido=self.context.player.z-last_check
+        longitud=next_check-last_check
+        progreso=recorrido/longitud
+
+
+        self.dibujar_barra(self.screen, progreso, x=x0,y=y0+2,ancho=22,alto=y-y0)
+
+        rect = self.resources.barra_flag.get_rect(midtop=(x-2, 30))
+        self.screen.blit(self.resources.barra_flag,rect)
+
         #tiempo
         #self.write_message(f"{self.context.timer:3.0f}",self.screen.get_width() // 2, 8)
         rect = self.resources.time.get_rect(midtop=(self.screen.get_width() // 2, 30))
@@ -310,6 +347,101 @@ class Juego:
     def stopSound(self, sound):
         sonido = self.sounds[sound]
         sonido.stop()
+
+    def dibujar_barra(self,pantalla, progreso,x=100,y=100,ancho=28,alto=500):
+
+        # Colores
+        BORDE = (75, 55, 35)
+        DORADO_OSCURO = (156, 103, 28)
+        DORADO = (255, 196, 55)
+        BRILLO = (255, 225, 120)
+
+
+        progreso = max(0.0, min(1.0, progreso))
+
+        # Tamaño de la barra
+        barra_ancho = ancho
+        barra_alto = alto
+
+        # Colores
+        BORDE = (75, 55, 35)
+        DORADO_OSCURO = (156, 103, 28)
+        DORADO = (255, 196, 55)
+        BRILLO = (255, 225, 120)
+
+        # Rectángulo principal usando midtop
+        barra = pygame.Rect(0, 0, barra_ancho, barra_alto)
+        barra.midtop = (x, y)
+
+        # Sombra
+        sombra = barra.copy()
+        sombra.x += 4
+        sombra.y += 4
+
+
+
+        # Altura del progreso
+        alto_progreso = int(barra_alto * progreso)
+
+        if alto_progreso > 0:
+
+            # El progreso crece desde abajo hacia arriba
+            progreso_rect = pygame.Rect(
+                barra.left,
+                barra.bottom - alto_progreso,
+                barra_ancho,
+                alto_progreso
+            )
+
+            # Dorado oscuro
+            pygame.draw.rect(
+                pantalla,
+                DORADO_OSCURO,
+                progreso_rect
+            )
+
+            # Parte principal
+            if alto_progreso > 8:
+                pygame.draw.rect(
+                    pantalla,
+                    DORADO,
+                    (
+                        barra.left,
+                        progreso_rect.top + 4,
+                        barra_ancho,
+                        alto_progreso - 8
+                    )
+                )
+
+            # Brillo superior
+            pygame.draw.rect(
+                pantalla,
+                BRILLO,
+                (
+                    barra.left,
+                    progreso_rect.top,
+                    barra_ancho,
+                    4
+                )
+            )
+
+            # Puntitos decorativos
+            for y_punto in range(
+                progreso_rect.bottom - 12,
+                progreso_rect.top + 8,
+                -16
+            ):
+                pygame.draw.rect(
+                    pantalla,
+                    (255, 211, 80),
+                    (
+                        barra.left + 8,
+                        y_punto,
+                        4,
+                        4
+                    )
+                )
+
 
 
 if __name__ == "__main__":

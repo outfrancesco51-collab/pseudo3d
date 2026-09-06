@@ -127,3 +127,4 @@ class MapGenerator:
         e=Checkpoint(z_rel,time)
         s.events.append(e)
 
+

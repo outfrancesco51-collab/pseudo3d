@@ -22,6 +22,7 @@ class GameContext:
         self.player=Player(self)
         self.keys=None
         self.default_profile=None
+        self.checkpoints=[]
         self.escenario=Escenario(self)
         self.createMap(self.escenario)
         self.estado=NONE
@@ -1035,11 +1036,15 @@ class GameContext:
             profile=checkpoint_profile
         )
 
+        s=self.road.segments[checkpoint_1]
+        z_rel=0.25
         MapGenerator.addCheckpoint(
-            self.road.segments[checkpoint_1],
-            0.25,
+            s,
+            z_rel,
             55.0
         )
+        self.checkpoints.append(s.z+z_rel)
+
 
         for x in (-1.0, -0.5, 0.0, 0.5):
             MapGenerator.addMark(
@@ -2442,11 +2447,14 @@ class GameContext:
             profile=checkpoint_profile
         )
 
+        s=self.road.segments[checkpoint_2]
+        z_rel=0.25
         MapGenerator.addCheckpoint(
             self.road.segments[checkpoint_2],
             0.25,
             40.0
         )
+        self.checkpoints.append(s.z+z_rel)
 
         for x in (-1.0, -0.5, 0.0, 0.5):
             MapGenerator.addMark(

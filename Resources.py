@@ -29,6 +29,12 @@ class Resources:
         messages_mini=pygame.image.load(base/"img"/"messages.png").convert_alpha()
         messages=pygame.transform.scale(messages_mini, (messages_mini.get_width() * 2, messages_mini.get_height() * 2))
         gear_mark=pygame.image.load(base/"img"/"gear.png").convert_alpha()
+        barra=pygame.image.load(base/"img"/"barra_checkpoint.png").convert_alpha()
+        barra_flag=barra.subsurface(0,0,15,13)
+        self.barra_flag=pygame.transform.scale(barra_flag, (barra_flag.get_width() * 2, barra_flag.get_height() * 2))
+        self.barra_top=barra.subsurface(16,0,32,7)
+        self.barra_middle=barra.subsurface(16,7,32,7)
+        self.barra_bottom=barra.subsurface(48,0,32,7)
         #gear_mark=pygame.transform.scale(gear_mark, (gear_mark.get_width() * 2, gear_mark.get_height() * 2))
 
         self.time=text32.subsurface(0,0,102,32)
