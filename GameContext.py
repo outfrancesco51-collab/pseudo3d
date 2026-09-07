@@ -228,6 +228,18 @@ class GameContext:
             5.0, 0.0, 2.0
             ,collidable=False
         )
+        objects = MapGenerator.objects(
+            objects,
+            self.road.segments[-55:-45],
+            "cartel.1",
+            2.0, 0.0, 1.5
+        )
+        objects = MapGenerator.objects(
+            objects,
+            self.road.segments[-55:-45],
+            "cartel.2",
+            2.0, 0.0, -1.5
+        )
 
 
         objects=self.vegetacion(objects,self.road.segments[-40:-1],x=1.7,step_x=1.0,step_z=6.0,offset_z=0.0,number=3,objeto="vegetacion.1")

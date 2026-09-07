@@ -39,6 +39,8 @@ class Resources:
         self.barra_top=barra.subsurface(16,0,32,7)
         self.barra_middle=barra.subsurface(16,7,32,7)
         self.barra_bottom=barra.subsurface(48,0,32,7)
+        minicoche=pygame.image.load(str(base/"img"/"minicoche.png")).convert_alpha()
+        self.minicoche=pygame.transform.scale(minicoche, (minicoche.get_width() * 2, minicoche.get_height() * 2))
         #gear_mark=pygame.transform.scale(gear_mark, (gear_mark.get_width() * 2, gear_mark.get_height() * 2))
 
         self.time=text32.subsurface(0,0,102,32)

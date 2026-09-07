@@ -61,7 +61,7 @@ class Juego:
         self.running=True
 
         self.font = pygame.font.Font(None, 18)
-        self.font100 = pygame.font.Font(None, 100)
+        self.font50 = pygame.font.Font(None, 50)
         self.font150 = pygame.font.Font(None, 150)
 
         #objetos de juego
@@ -116,7 +116,7 @@ class Juego:
                     self.context.changeStatus(GAMEOVER_FINAL)
             else:
                 self.context.changeStatus(NORMAL)
-        elif self.context.estado==FINISH:
+        elif self.context.estado==FINISH or self.context.estado==GAMEOVER_FINAL:
             self.context.player.reset()
             if self.context.keys[pygame.K_RETURN]:
                 self.context.changeStatus(NONE)
@@ -167,8 +167,7 @@ class Juego:
         elif self.context.estado==GAMEOVER_FINAL or self.context.estado==FINISH:
             rect = self.resources.gameover.get_rect(midtop=(self.screen.get_width() // 2, int(self.screen.get_height()*0.4)))
             self.screen.blit(self.resources.gameover,rect)
-            if self.context.estado==FINISH:
-                self.write_message("Press ENTER to play again",self.screen_w // 2,450,font=self.font100)
+            self.write_message("Press ENTER to play again",self.screen_w // 2,int(self.screen_h*0.8),font=self.font50)
         else:
             #dibujar mensajes
             for msg in self.messages:
@@ -306,10 +305,17 @@ class Juego:
         progreso=recorrido/longitud
 
 
-        self.dibujar_barra(self.screen, progreso, x=x0,y=y0+2,ancho=22,alto=y-y0)
+        altura=self.dibujar_barra(self.screen, progreso, x=x0,y=y0+2,ancho=22,alto=y-y0)
 
         rect = self.resources.barra_flag.get_rect(midtop=(x-2, 30))
         self.screen.blit(self.resources.barra_flag,rect)
+
+        rect = self.resources.minicoche.get_rect(midtop=(x, altura-(self.resources.minicoche.get_height() // 2)))
+        self.screen.blit(self.resources.minicoche,rect)
+
+
+
+
 
         #tiempo
         #self.write_message(f"{self.context.timer:3.0f}",self.screen.get_width() // 2, 8)
@@ -392,10 +398,7 @@ class Juego:
         barra = pygame.Rect(0, 0, barra_ancho, barra_alto)
         barra.midtop = (x, y)
 
-        # Sombra
-        sombra = barra.copy()
-        sombra.x += 4
-        sombra.y += 4
+
 
 
 
@@ -460,6 +463,10 @@ class Juego:
                         4
                     )
                 )
+
+        return barra.bottom - alto_progreso
+
+
 
 
 

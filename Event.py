@@ -37,6 +37,7 @@ class Checkpoint(Event):
             context.root.sounds["checkpoint"].play()
             context.score+=1000+int(context.timer)*100
             context.timer+=self.time
+            context.stage+=1
             x=context.screen.get_width() // 2
             y=int(context.screen.get_height()*0.45)
             context.root.messages.append(Message(x,y,context.root.resources.checkpoint,2.0))

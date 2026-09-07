@@ -93,6 +93,8 @@ class Escenario:
         self.cache.addImage("vegetacion.2","vegetacion.2.png",(0.5,1.0),False,False)
         self.cache.addImage("vegetacion.3","vegetacion.3.png",(0.5,1.0),False,False)
         self.cache.addImage("mastil","mastil.png",(1.0,0.85),False,False)
+        self.cache.addImage("cartel.1","cartel.1.png",(0.5,1.0),False,False)
+        self.cache.addImage("cartel.2","cartel.2.png",(0.5,1.0),False,False)
 
         self.cache.addAnimation("enemigo.1","enemigo.1.png",(0.5,1.0),False,True,ancho=256,alto=256)
         self.cache.addAnimation("bandera.r","bandera.r.png",(0.0,5.0),False,True,ancho=486,alto=288)

@@ -1,6 +1,16 @@
+esta semana:
+Roadside billboards/ads
+Finish road decoration
+Shading for enemy car sprites
+Add traffic to the track
+Adjustable road width
+End-of-race screen: message, restart, Esc to quit => OK
+Remap controls: swap up/down for Z and X => OK
+
+resto:
+
 -sprites coches *
 -medianas
--sonido *
 -bifucaciones
 -escenarios
  -vegetación - campos
