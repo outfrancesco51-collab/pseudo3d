@@ -1,5 +1,6 @@
 import pygame
 import math
+import sys
 from pathlib import Path
 from ImageCache import ImageCache
 from Object import Object,VisibleObject
@@ -96,8 +97,11 @@ class Player(Car):
         self.type=Object.PLAYER
 
         #sonido
-        base = str(Path(__file__).resolve().parent)
-        self.engine = EngineSound(base+"/sound/loop_5.wav")
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            base = Path(sys._MEIPASS)
+        else:
+            base = Path(__file__).resolve().parent
+        self.engine = EngineSound(str(base/"sound/loop_5.wav"))
         self.engine.start()
 
         #frame
@@ -115,8 +119,8 @@ class Player(Car):
         if self.context.estado==NORMAL or self.context.estado==STARTING or self.context.estado==GAMEOVER or self.context.estado==GAMEOVER_FINAL:
 
             if self.context.estado!=GAMEOVER and self.context.estado!=GAMEOVER_FINAL:
-                k_freno=self.context.keys[pygame.K_DOWN]
-                k_acel=self.context.keys[pygame.K_UP]
+                k_freno=self.context.keys[pygame.K_x]
+                k_acel=self.context.keys[pygame.K_z]
                 k_vol_r=self.context.keys[pygame.K_RIGHT]
                 k_vol_l=self.context.keys[pygame.K_LEFT]
             else:

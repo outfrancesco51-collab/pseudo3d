@@ -22,7 +22,7 @@ class GameContext:
         self.player=Player(self)
         self.keys=None
         self.default_profile=None
-        self.checkpoints=[]
+        self.checkpoints=None
         self.escenario=Escenario(self)
         self.createMap(self.escenario)
         self.estado=NONE
@@ -31,7 +31,7 @@ class GameContext:
         #inicio
         self.countdown=0.0
         #game data
-        self.timer=0.0
+        self.timer=60.0
         self.score=0
         self.stage=1
 
@@ -45,6 +45,7 @@ class GameContext:
         DOWN = -0.01
 
         objects=[]
+        self.checkpoints=[]
 
 
 
@@ -2452,7 +2453,7 @@ class GameContext:
         MapGenerator.addCheckpoint(
             self.road.segments[checkpoint_2],
             0.25,
-            40.0
+            45.0
         )
         self.checkpoints.append(s.z+z_rel)
 
@@ -2941,6 +2942,13 @@ class GameContext:
         MapGenerator.addMark(self.road.segments[-41], "flecha.2", x=0.4, z=0.0, w=0.5, h=1.0)
         
 
+        MapGenerator.addFinish(
+            self.road.segments[-1],
+            0.5
+        )
+
+
+
         objects.sort(key=lambda obj: obj.z)
         self.road.objects=objects
             
@@ -2962,10 +2970,13 @@ class GameContext:
             self.player.reset()
             self.stuck_time=0.0
         elif estado == STARTING:
-            self.countdown=2.99
+            self.countdown=3.99
             self.root.sounds["321go"].play()
         elif estado == GAMEOVER_FINAL:
             self.root.sounds["gameover"].play()
+        elif estado == FINISH:
+            self.player.reset()
+
         self.estado=estado
 
     def add_bumps(self, repeats=3, segments=4, slope=0.025):

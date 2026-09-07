@@ -1,6 +1,8 @@
 from Enemy import Enemy
 from Message import Message
+from Estados import FINISH
 from typing import TYPE_CHECKING
+
 
 if TYPE_CHECKING:
     from GameContext import GameContext
@@ -38,4 +40,13 @@ class Checkpoint(Event):
             x=context.screen.get_width() // 2
             y=int(context.screen.get_height()*0.45)
             context.root.messages.append(Message(x,y,context.root.resources.checkpoint,2.0))
+            self.enabled=False
+
+class Finish(Event):
+    def __init__(self,z):
+        super().__init__(z) 
+
+    def execute(self,context:"GameContext"):
+        if self.enabled:
+            context.changeStatus(FINISH)
             self.enabled=False

@@ -1,13 +1,17 @@
 import pygame
+import sys
 from pathlib import Path
 
 class Resources:
     def __init__(self,gen_scale):
-        base = Path(__file__).resolve().parent
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            base = Path(sys._MEIPASS)
+        else:
+            base = Path(__file__).resolve().parent
 
         self.number43_dim=[(28,28),(20,20),(26,26),(27,27),(29,29),(28,28),(28,28),(23,23),(28,28),(28,28)]
         self.number86_dim=[(56,56),(40,40),(52,52),(54,54),(58,58),(56,56),(56,56),(46,46),(56,56),(56,56)]
-        self.number43=pygame.image.load(base/"img"/"font.number.64.png").convert_alpha()
+        self.number43=pygame.image.load(str(base/"img"/"font.number.64.png")).convert_alpha()
         #escala=2/gen_scale
         self.number86=pygame.transform.scale(self.number43, (self.number43.get_width() * 2, self.number43.get_height() * 2))
         self.number43_items=[]
@@ -24,12 +28,12 @@ class Resources:
             self.number86_items.append(self.number86.subsurface(x,0,w,86))
             x+=w
 
-        text16=pygame.image.load(base/"img"/"text.16.png").convert_alpha()
+        text16=pygame.image.load(str(base/"img"/"text.16.png")).convert_alpha()
         text32=pygame.transform.scale(text16, (text16.get_width() * 2, text16.get_height() * 2))
-        messages_mini=pygame.image.load(base/"img"/"messages.png").convert_alpha()
+        messages_mini=pygame.image.load(str(base/"img"/"messages.png")).convert_alpha()
         messages=pygame.transform.scale(messages_mini, (messages_mini.get_width() * 2, messages_mini.get_height() * 2))
-        gear_mark=pygame.image.load(base/"img"/"gear.png").convert_alpha()
-        barra=pygame.image.load(base/"img"/"barra_checkpoint.png").convert_alpha()
+        gear_mark=pygame.image.load(str(base/"img"/"gear.png")).convert_alpha()
+        barra=pygame.image.load(str(base/"img"/"barra_checkpoint.png")).convert_alpha()
         barra_flag=barra.subsurface(0,0,15,13)
         self.barra_flag=pygame.transform.scale(barra_flag, (barra_flag.get_width() * 2, barra_flag.get_height() * 2))
         self.barra_top=barra.subsurface(16,0,32,7)

@@ -1,7 +1,8 @@
 import pygame
 import math
+import sys
 from pathlib import Path
-from Estados import NONE,STARTING,GAMEOVER,GAMEOVER_FINAL,NORMAL
+from Estados import NONE,STARTING,GAMEOVER,GAMEOVER_FINAL,NORMAL,FINISH
 from GameContext import GameContext
 from Point import Point
 from Message import Message
@@ -20,17 +21,21 @@ class Juego:
         # Canales simultáneos para SFX
         pygame.mixer.set_num_channels(16)
 
-        base = Path(__file__).resolve().parent
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            base = Path(sys._MEIPASS)
+        else:
+            base = Path(__file__).resolve().parent
+
         self.sounds = {
-            "derrape": pygame.mixer.Sound(base/"sound/derrape.wav"),
-            "321go": pygame.mixer.Sound(base/"sound/321go.wav"),
-            "checkpoint": pygame.mixer.Sound(base/"sound/checkpoint.wav"),
-            "freno": pygame.mixer.Sound(base/"sound/freno.wav"),
-            "crash": pygame.mixer.Sound(base/"sound/crash.wav"),
-            "gameover": pygame.mixer.Sound(base/"sound/gameover.wav"),
-            "hierba": pygame.mixer.Sound(base/"sound/hierba.wav"),
-            "marcha": pygame.mixer.Sound(base/"sound/marcha.wav"),
-            "choque": pygame.mixer.Sound(base/"sound/choque.wav")
+            "derrape": pygame.mixer.Sound(str(base/"sound/derrape.wav")),
+            "321go": pygame.mixer.Sound(str(base/"sound/321go.wav")),
+            "checkpoint": pygame.mixer.Sound(str(base/"sound/checkpoint.wav")),
+            "freno": pygame.mixer.Sound(str(base/"sound/freno.wav")),
+            "crash": pygame.mixer.Sound(str(base/"sound/crash.wav")),
+            "gameover": pygame.mixer.Sound(str(base/"sound/gameover.wav")),
+            "hierba": pygame.mixer.Sound(str(base/"sound/hierba.wav")),
+            "marcha": pygame.mixer.Sound(str(base/"sound/marcha.wav")),
+            "choque": pygame.mixer.Sound(str(base/"sound/choque.wav"))
         }
         self.sounds["derrape"].set_volume(0.5)
         self.sounds["freno"].set_volume(0.2)
@@ -61,13 +66,10 @@ class Juego:
 
         #objetos de juego
 
-        self.context=GameContext(self.screen,self,gen_scale=(1/gen_scale))
+        self.gen_scale=gen_scale
+        self.context=None
 
-        # situar el coche en la carretera y la camara detrás
 
-        self.context.player.x=0.0
-        self.context.player.y=0.0
-        self.context.player.z=self.context.camera.player_z
         self.debug_text=""
 
         #mesajes
@@ -82,9 +84,19 @@ class Juego:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
 
     def update(self, dt):
-        if self.context.estado == NONE:
+        if self.context==None or self.context.estado == NONE:
+            self.context=GameContext(self.screen,self,gen_scale=(1/self.gen_scale))
+            #reiniciar el coche
+            self.context.player.x=0.0
+            self.context.player.y=0.0
+            self.context.player.z=self.context.camera.player_z
+            self.context.player.engine.start()
+            #eliminar objetos
             self.context.changeStatus(STARTING)
             return
         if self.context.estado==STARTING:
@@ -93,7 +105,7 @@ class Juego:
             if self.context.countdown<=1e-6:
                 self.messages.append(Message(self.screen.get_width() // 2,int(self.screen.get_height() *0.425),self.resources.go,1.0))
                 self.context.changeStatus(NORMAL)
-        elif self.context.estado!=GAMEOVER and self.context.estado!=GAMEOVER_FINAL:
+        elif self.context.estado!=GAMEOVER and self.context.estado!=GAMEOVER_FINAL and self.context.estado!=FINISH:
             self.context.timer-=dt
             self.context.timer = max(self.context.timer, 0.0)
             if self.context.timer <= 1e-6:
@@ -104,17 +116,22 @@ class Juego:
                     self.context.changeStatus(GAMEOVER_FINAL)
             else:
                 self.context.changeStatus(NORMAL)
+        elif self.context.estado==FINISH:
+            self.context.player.reset()
+            if self.context.keys[pygame.K_RETURN]:
+                self.context.changeStatus(NONE)
+
             
 
-        
-        self.context.camera.update(dt)
+        if self.context.estado!=FINISH:      
+            self.context.camera.update(dt)
 
         #borrar mensajes
         self.update_messages(dt)
 
 
     def draw(self):
-        if self.context.estado == NONE:
+        if self.context==None or self.context.estado == NONE:
             return
 
         self.context.camera.draw(self.screen)
@@ -147,9 +164,11 @@ class Juego:
         if self.context.estado==STARTING:
             #self.write_message(f"{math.floor(self.context.countdown)+1:1.0f}",self.screen.get_width() // 2, self.screen.get_height() // 2, font=self.font150)
             self.resources.draw_number_align(self.screen, self.resources.number86_items,self.resources.number86_dim, f"{math.floor(self.context.countdown+1.0):1.0f}", self.screen.get_width() // 2, (self.screen.get_height() // 2)-50)
-        elif self.context.estado==GAMEOVER_FINAL:
+        elif self.context.estado==GAMEOVER_FINAL or self.context.estado==FINISH:
             rect = self.resources.gameover.get_rect(midtop=(self.screen.get_width() // 2, int(self.screen.get_height()*0.4)))
             self.screen.blit(self.resources.gameover,rect)
+            if self.context.estado==FINISH:
+                self.write_message("Press ENTER to play again",self.screen_w // 2,450,font=self.font100)
         else:
             #dibujar mensajes
             for msg in self.messages:
@@ -164,13 +183,13 @@ class Juego:
 
     def run(self):
 
-        self.context.timer=60.0
 
         while self.running:
             dt=self.clock.tick(self.fps)/1000.0
 
             self.handle_events()
-            self.context.keys=pygame.key.get_pressed()
+            if self.context!=None:
+                self.context.keys=pygame.key.get_pressed()
             self.update(dt)
             self.draw()
 

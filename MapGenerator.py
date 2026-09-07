@@ -2,7 +2,7 @@ import random
 from RoadMark import RoadMark
 from Road import Segment
 from Object import Object
-from Event import EnemySpawn,Checkpoint
+from Event import EnemySpawn,Checkpoint,Finish
 
 class MapGenerator:
     CURVE=0
@@ -127,4 +127,8 @@ class MapGenerator:
         e=Checkpoint(z_rel,time)
         s.events.append(e)
 
+    @staticmethod
+    def addFinish(s:Segment,z_rel):
+        e=Finish(z_rel)
+        s.events.append(e)
 

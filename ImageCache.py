@@ -1,5 +1,6 @@
 import pygame
 import math
+import sys
 from pathlib import Path
 from Point import Point
 from Image import Image
@@ -58,15 +59,17 @@ class ImageCache:
         self.resizeFactor=p.z/self.config.resize_at_1
 
 
-        self.base = Path(__file__).resolve().parent
-
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            self.base = Path(sys._MEIPASS)
+        else:
+            self.base = Path(__file__).resolve().parent
 
     def addAnimation(self,name,file,anchor,flip=True,shadow=False,ancho=32,alto=32):
-        img=pygame.image.load(self.base/"img"/file).convert_alpha()
+        img=pygame.image.load(str(self.base/"img"/file)).convert_alpha()
         frames=self.load_frames(img, ancho, alto)
         self.newAnimation(name,frames,anchor,shadow)
         if flip==True:
-            img=pygame.image.load(self.base/"img"/file).convert_alpha()
+            img=pygame.image.load(str(self.base/"img"/file)).convert_alpha()
             img=pygame.transform.flip(img,True,False)
             frames=[]
             for item in reversed(self.load_frames(img, ancho, alto)):
@@ -77,7 +80,7 @@ class ImageCache:
 
 
     def addImage(self,name,file,anchor,flip=True,shadow=False):
-        img=pygame.image.load(self.base/"img"/file).convert_alpha()
+        img=pygame.image.load(str(self.base/"img"/file)).convert_alpha()
         self.newImage(name,img,anchor,shadow)
         if flip==True:
             img=pygame.transform.flip(img,True,False)

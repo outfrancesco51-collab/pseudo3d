@@ -1,4 +1,5 @@
 import pygame
+import sys
 from pathlib import Path
 from ImageCache import ImageCache
 from DefaultDrawer import DefaultDrawer
@@ -99,11 +100,14 @@ class Escenario:
         self.cache.addAnimation("bandera.a","bandera.a.png",(0.0,5.0),False,True,ancho=486,alto=288)
 
         self.images={}
-        base = Path(__file__).resolve().parent
-        self.images["flecha.1"]=pygame.image.load(base/"img"/"flecha.1.png").convert_alpha()
-        self.images["flecha.2"]=pygame.image.load(base/"img"/"flecha.2.png").convert_alpha()
-        self.images["linea"]=pygame.image.load(base/"img"/"linea.png").convert_alpha()
-        self.images["parrilla"]=pygame.image.load(base/"img"/"parrilla.png").convert_alpha()
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            base = Path(sys._MEIPASS)
+        else:
+            base = Path(__file__).resolve().parent
+        self.images["flecha.1"]=pygame.image.load(str(base/"img"/"flecha.1.png")).convert_alpha()
+        self.images["flecha.2"]=pygame.image.load(str(base/"img"/"flecha.2.png")).convert_alpha()
+        self.images["linea"]=pygame.image.load(str(base/"img"/"linea.png")).convert_alpha()
+        self.images["parrilla"]=pygame.image.load(str(base/"img"/"parrilla.png")).convert_alpha()
 
 
         self.drawer=DefaultDrawer(context)

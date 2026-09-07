@@ -1,4 +1,5 @@
 import pygame
+import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -7,9 +8,12 @@ if TYPE_CHECKING:
 
 class Background:
     def __init__(self,img,rolling,v_mov,mov,context:"GameContext",bg_color=(0,0,0),x=0.0,y=0.0,resize=1.0):
-        base = Path(__file__).resolve().parent
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            base = Path(sys._MEIPASS)
+        else:
+            base = Path(__file__).resolve().parent
         self.img=img
-        self.f_img1=pygame.image.load(base/img).convert_alpha()
+        self.f_img1=pygame.image.load(str(base/img)).convert_alpha()
         #escalar la imagen
         if resize!=1.0:
             self.f_img1 = pygame.transform.scale(self.f_img1,(int(self.f_img1.get_width() * resize), int(self.f_img1.get_height() * resize)))
