@@ -102,7 +102,6 @@ class Player(Car):
         else:
             base = Path(__file__).resolve().parent
         self.engine = EngineSound(str(base/"sound/loop_5.wav"))
-        self.engine.start()
 
         #frame
         self.frame=0
