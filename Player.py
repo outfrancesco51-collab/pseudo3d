@@ -393,7 +393,8 @@ class Player(Car):
 
         #giro y fuerzas laterales
         dz_segura=max(0.001,dz)
-        giro_player=giro*self.FUERZA_VOLANTE*dz_segura
+        factor_giro = max(0.1, factor_v)
+        giro_player=giro*self.FUERZA_VOLANTE*dz_segura*factor_giro/ max(factor_v, 0.001)
         curva_pista=0.0
         if self.getVS(self.context)!=None:
             curva_pista=self.getVS(self.context).segment.curve

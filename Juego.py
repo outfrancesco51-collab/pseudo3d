@@ -2,7 +2,7 @@ import pygame
 import math
 import sys
 from pathlib import Path
-from Estados import NONE,STARTING,GAMEOVER,GAMEOVER_FINAL,NORMAL,FINISH
+from Estados import NONE,STARTING,GAMEOVER,GAMEOVER_FINAL,NORMAL,FINISH,PRELOADED
 from GameContext import GameContext
 from Point import Point
 from Message import Message
@@ -97,6 +97,9 @@ class Juego:
             self.context.player.z=self.context.camera.player_z
             self.context.player.engine.start()
             #eliminar objetos
+            self.context.changeStatus(PRELOADED)
+            return
+        if self.context.estado==PRELOADED:
             self.context.changeStatus(STARTING)
             return
         if self.context.estado==STARTING:

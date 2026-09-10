@@ -1,0 +1,183 @@
+circuit:
+  sections:
+    - name: "salida"
+      data: [
+        {command: "S", segments: 70},
+        {command: "O",segments: 4,img: "start",step: 10.0,offset: 3.0,x: 0.0,collidable: false },
+        {command: "O",segments: 4,img: "column",step: 10.0,offset: 3.0,x: 1.11,collidable: false },
+        {command: "O",segments: 4,img: "column",step: 10.0,offset: 3.0,x: -1.11,collidable: false },
+        {command: "O",segments: 20,img: "quitamiedos",step: 0.09,offset: 0.03,x: 1.1 },
+        {command: "O",segments: 20,img: "quitamiedos",step: 0.09,offset: 0.03,x: -1.1 },
+        {command: "O",segments: 20,img: "quitamiedos.down",step: 0.09,offset: 0.03,x: 1.1 },
+        {command: "O",segments: 20,img: "quitamiedos.down",step: 0.09,offset: 0.03,x: -1.1 },
+        {command: "O",segments: 17,img: "pitbox.1",step: 10.0,offset: 7.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "pitbox.2",step: 10.0,offset: 11.5,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "pitbox.3",step: 10.0,offset: 14.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "mastil",step: 10.0,offset: 14.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "bandera.r",step: 10.0,offset: 13.99,x: -2.0, collidable: false, anim: true, frametime: 0.05 },
+        {command: "O",segments: 17,img: "mastil",step: 10.0,offset: 14.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "bandera.r",step: 10.0,offset: 13.99,x: -2.0, collidable: false, anim: true, frametime: 0.05 },
+        {command: "O",segments: 17,img: "mastil",step: 10.0,offset: 10.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "bandera.a",step: 10.0,offset: 9.99,x: -2.0, collidable: false, anim: true, frametime: 0.05 },
+        {command: "O",segments: 17,img: "mastil",step: 10.0,offset: 12.0,x: -2.0, collidable: false },
+        {command: "O",segments: 17,img: "bandera.v",step: 10.0,offset: 11.99,x: -2.0, collidable: false, anim: true, frametime: 0.05 },
+        {command: "O",segments: 5,img: "ruedas",step: 10.0,offset: 1.5,x: -0.5, collidable: false },
+        {command: "O",segments: 5,img: "ruedas",step: 10.0,offset: 1.3,x: 0.5, collidable: false },
+        {command: "O",segments: 25,img: "grada",step: 5.0,offset: 5.0,x: 2.0, collidable: false },
+        {command: "O",segments: 25,img: "cartel.1",step: 2.0,offset: 15.0,x: 1.5},
+        {command: "O",segments: 25,img: "cartel.2",step: 2.0,offset: 15.0,x: -1.5},
+        {command: "V",segments: 70,img: "vegetacion.1", x: 1.7, step_x: 1.0, step_z: 6.0, offset: 30.0, number: 3},
+        {command: "V",segments: 70,img: "vegetacion.2", x: 1.7, step_x: 1.0, step_z: 6.0, offset: 33.0, number: 3},
+      ]
+    - name: "primeras curvas"
+      data: [
+        # ------------------------------------------------------------
+        # Primera curva derecha
+        # AVENIDA
+        # ------------------------------------------------------------
+        {command: "CR", segments: 45},
+        {command: "O", img: "farola.flip",step: 5.0,offset: 0.0,x: -1.4 },
+        {command: "O", img: "farola.flip",step: 5.0,offset: 2.5,x: 1.4 },
+        {command: "V",img: "vegetacion.1", x: 1.95, step_x: 0.9, step_z: 5.0, offset: 0.0, number: 2},
+        {command: "V",img: "vegetacion.2", x: 1.95, step_x: 0.9, step_z: 5.0, offset: 2.5, number: 2},
+        # ------------------------------------------------------------
+        # Pequeño descanso
+        # TRANSICION AVENIDA -> BOSQUE
+        # ------------------------------------------------------------
+        {command: "S", segments: 25},
+        {command: "F",img: "arbol",x: 1.5, step_x: 0.8, step_z: 7.0, offset: 0.0, number: 2, random_x: 0.25, random_step: 1.5},
+        {command: "F",img: "arbol.2",x: 1.5, step_x: 0.8, step_z: 7.0, offset: 2.5, number: 1, random_x: 0.25, random_step: 1.5},
+        {command: "F",img: "arbol.3",x: 1.5, step_x: 0.8, step_z: 7.0, offset: 5.0, number: 1, random_x: 0.25, random_step: 1.5},
+        {command: "V",img: "vegetacion.3",x: 1.9, step_x: 0.9, step_z: 4.0, offset: 1.0, number: 2},
+        # ------------------------------------------------------------
+        # Curva izquierda
+        # BOSQUE
+        # ------------------------------------------------------------
+        {command: "CL", segments: 55},
+        {command: "V",img: "vegetacion.3",x: 2.05, step_x: 0.9, step_z: 4.0, offset: 0.0, number: 3},
+        {command: "F",img: "arbol",x: 1.5, step_x: 0.75, step_z: 8.0, offset: 0.0, number: 3,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.2",x: 1.5, step_x: 0.75, step_z: 8.0, offset: 4.0, number: 3,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.3",x: 1.9, step_x: 0.75, step_z: 8.0, offset: 2.0, number: 3,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.4",x: 2.0, step_x: 0.8, step_z: 10.0, offset: 6.0, number: 1,random_x: 0.30,random_step: 3.0},
+        # ------------------------------------------------------------
+        # Recta dentro del bosque
+        # ------------------------------------------------------------
+        {command: "S", segments: 45},
+        {command: "V",img: "vegetacion.1",x: 1.95, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
+        {command: "V",img: "vegetacion.2",x: 1.95, step_x: 1.0, step_z: 5.0, offset: 2.5, number: 2},
+        {command: "F",img: "arbol",x: 1.5, step_x: 0.75, step_z: 8.0, offset: 1.0, number: 3,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.2",x: 1.5, step_x: 0.75, step_z: 8.0, offset: 5.0, number: 2,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.3",x: 1.9, step_x: 0.8, step_z: 10.0, offset: 3.0, number: 2,random_x: 0.30,random_step: 3.0},
+        {command: "O", img: "piedra",step: 15.0,offset: 4.0,x: -1.45,random_x: -0.25,random_step: 3.0,profile: "piedra" },
+        {command: "O", img: "piedra",step: 17.0,offset: 7.0,x: 1.45,random_x: 0.25,random_step: 3.0,profile: "piedra" },
+        # ------------------------------------------------------------
+        # Curva larga derecha
+        # Salimos ligeramente del bosque
+        # ------------------------------------------------------------
+        {command: "CR", segments: 70},
+        {command: "V",img: "vegetacion.1",x: 1.95, step_x: 0.9, step_z: 5.0, offset: 0.0, number: 2},
+        {command: "V",img: "vegetacion.2",x: 1.95, step_x: 0.9, step_z: 5.0, offset: 2.5, number: 2},
+        {command: "F",img: "arbol.2",x: 2.5, step_x: 0.8, step_z: 9.0, offset: 1.0, number: 2,random_x: 0.30,random_step: 3.0},
+        {command: "F",img: "arbol.4",x: 2.5, step_x: 0.8, step_z: 10.0, offset: 5.0, number: 2,random_x: 0.30,random_step: 3.0},
+        # ------------------------------------------------------------
+        # Recta antes de enlazadas
+        # Claro parcial
+        # ------------------------------------------------------------
+        {command: "S", segments: 25},
+        {command: "V",img: "vegetacion.3",x: 2.0, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
+        {command: "F",img: "arbol.3",x: 2.5, step_x: 0.9, step_z: 10.0, offset: 2.0, number: 1,random_x: 0.25,random_step: 2.0},
+        {command: "F",img: "arbol.4",x: 2.5, step_x: 0.9, step_z: 10.0, offset: 6.0, number: 1,random_x: 0.25,random_step: 2.0},
+        # ------------------------------------------------------------
+        # Enlazadas sencillas R -> L
+        # ------------------------------------------------------------
+        {command: "CR", segments: 45},
+        {command: "F",img: "arbol.2",x: 1.5, step_x: 0.75, step_z: 7.0, offset: 0.0, number: 3,random_x: 0.3,random_step: 3.0},
+        {command: "F",img: "arbol.3",x: 1.9, step_x: 0.8, step_z: 9.0, offset: 3.0, number: 2,random_x: 0.3,random_step: 3.0},
+        {command: "V",img: "vegetacion.1",x: 1.95, step_x: 1.0, step_z: 4.5, offset: 0.5, number: 2},
+        {command: "CL", segments: 55},
+        {command: "F",img: "arbol",x: 1.5, step_x: 0.75, step_z: 7.0, offset: 2.0, number: 3,random_x: 0.3,random_step: 3.0},
+        {command: "F",img: "arbol.4",x: 1.9, step_x: 0.8, step_z: 9.0, offset: 5.0, number: 2,random_x: 0.3,random_step: 3.0},
+        {command: "V",img: "vegetacion.2",x: 1.95, step_x: 1.0, step_z: 4.5, offset: 0.0, number: 2},
+        # ------------------------------------------------------------
+        # Fin de la zona de aprendizaje
+        # Abrimos la carretera
+        # ------------------------------------------------------------
+        {command: "S", segments: 35},
+        {command: "V",img: "vegetacion.3",x: 2.00, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
+        {command: "F",img: "arbol.2",x: 1.9, step_x: 0.9, step_z: 10.0, offset: 2.0, number: 2,random_x: 0.25,random_step: 2.5},
+        {command: "F",img: "arbol.3",x: 2.0, step_x: 0.9, step_z: 10.0, offset: 7.0, number: 1,random_x: 0.25,random_step: 2.5},
+        # ------------------------------------------------------------
+        # Flechas
+        # ------------------------------------------------------------
+        {command: "MK",img: "flecha.1",segment: -10,x: -0.9, w: 0.5, h: 1.0},
+        {command: "MK",img: "flecha.1",segment: -10,x: -0.25, w: 0.5, h: 1.0},
+        {command: "MK",img: "flecha.1",segment: -10,x: 0.4, w: 0.5, h: 1.0},
+        {command: "MK",img: "flecha.2",segment: -11,x: -0.9, w: 0.5, h: 1.0},
+        {command: "MK",img: "flecha.2",segment: -11,x: -0.25, w: 0.5, h: 1.0},
+        {command: "MK",img: "flecha.2",segment: -11,x: 0.4, w: 0.5, h: 1.0}
+      ]
+    - name: "primer checkpoint + rasantes"
+
+      data: [
+
+        # ============================================================
+        # TRAMO RECTO / CHECKPOINT
+        # Zona publicitaria limpia
+        # ============================================================
+
+        {command: "S", segments: 25},
+
+        {command: "CHK", segment: 0, z: 0.25, time: 55.0},
+
+        # Publicidad continua izquierda
+        {command: "O", segments: 18, img: "cartel.1", step: 2.0, offset: 0.0, x: -1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.2", step: 2.0, offset: 2.0, x: -1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.3", step: 2.0, offset: 4.0, x: -1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.4", step: 2.0, offset: 6.0, x: -1.9, collidable: false},
+
+        # Publicidad continua derecha
+        {command: "O", segments: 18, img: "cartel.1", step: 2.0, offset: 0.0, x: 1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.2", step: 2.0, offset: 2.0, x: 1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.3", step: 2.0, offset: 4.0, x: 1.9, collidable: false},
+        {command: "O", segments: 18, img: "cartel.4", step: 2.0, offset: 6.0, x: 1.9, collidable: false},
+
+        # Únicamente masa forestal muy lejana
+        {command: "F", segments: 25, img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
+
+        # ============================================================
+        # PEQUEÑO TRAMO RECTO ANTES DE LOS BUMPS
+        # ============================================================
+
+        {command: "S", segments: 20},
+
+        {command: "V", segments: 20, img: "vegetacion.2", x: 2.0, step_x: 1.0, step_z: 4.5, offset: 0.5, number: 2},
+
+        {command: "F", segments: 20, img: "arbol", x: 1.8, step_x: 0.9, step_z: 10.0, offset: 2.0, number: 1, random_x: 0.25, random_step: 2.5},
+        {command: "F", segments: 20, img: "arbol.2", x: 2.1, step_x: 0.9, step_z: 12.0, offset: 7.0, number: 1, random_x: 0.25, random_step: 2.5},
+
+        {command: "F", segments: 20, img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 1.0, number: 1, random_x: 0.75, random_step: 1.5},
+
+
+        # ============================================================
+        # SEÑALES DE RASANTE
+        # ============================================================
+
+        {command: "O", img: "rasante", step: 30.0, offset: 17.0, x: -1.4, collidable: true},
+        {command: "O", img: "rasante", step: 30.0, offset: 17.0, x: 1.4, collidable: true},
+
+
+        # ============================================================
+        # BUMPS
+        # ============================================================
+
+        {command: "BMP", repeats: 3, segments: 4, slope: 0.025},
+
+        {command: "V", segments: 12, img: "vegetacion.3", x: 2.1, step_x: 1.0, step_z: 4.0, offset: 0.0, number: 2},
+
+        # Árboles bastante alejados para no tapar los bumps
+        {command: "F", segments: 12, img: "arbol.3", x: 3.2, step_x: 1.0, step_z: 6.0, offset: 0.0, number: 1, random_x: 0.3, random_step: 1.5},
+        {command: "F", segments: 12, img: "arbol.4", x: 3.5, step_x: 1.0, step_z: 7.0, offset: 3.0, number: 1, random_x: 0.3, random_step: 1.5},
+
+        # Fondo
+        {command: "F", segments: 12, img: "arbol.2", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5}
+      ]
