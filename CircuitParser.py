@@ -125,22 +125,25 @@ class CircuitParser:
 
     def get_segments(self, command):
         segments = command.get("segments")
-        if command=="O" or command=="B" or command=="V":
-            if segments is None:
+        if segments is not None:
+            if not isinstance(segments, int) or isinstance(segments, bool):
                 raise ValueError(
-                    f"Command '{command.get('command')}' "
-                    f"requires 'segments'"
+                    f"'segments' must be a positive integer: {segments}"
                 )
-
-            if not isinstance(segments, int) or segments <= 0:
+            if segments <= 0:
                 raise ValueError(
-                    f"Invalid segments value: {segments}"
+                    f"'segments' must be a positive integer: {segments}"
                 )
 
         return segments
 
     def get_current_tramo(self, segments):
         if segments is None:
+            if not self.current_tramo:
+                raise ValueError(
+                    "This command requires a previous road section "
+                    "when 'segments' is omitted"
+                )
             return self.current_tramo
         first_segment=self.last_segment+1
         if first_segment+segments > len(self.context.road.segments):
@@ -240,6 +243,8 @@ class CircuitParser:
             step_z=data.get("step_z", 5.0),
             offset_z=data.get("offset", 0.0),
             number=data.get("number", 1),
+            random_x=data.get("random_x", 0.0),
+            random_step=data.get("random_step", 0.0),
             objeto=img
         )
     # ============================================================
@@ -251,7 +256,7 @@ class CircuitParser:
         img = data["img"]
 
         MapGenerator.addMark(
-            self.context.road.segments[data["segment"]],
+            self.current_tramo[data["segment"]],
             img,
             x=data.get("x", 0.0),
             z=data.get("z", 0.0),
