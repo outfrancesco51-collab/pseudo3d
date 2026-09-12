@@ -88,7 +88,7 @@ class Escenario:
         self.cache.addImage("pitbox.3","pitbox.n.png",(0.5,1.0),False,False)
         self.cache.addImage("start","start.png",(0.5,3.5),False,False)
         self.cache.addImage("column","column.png",(0.5,1.0),False,False)
-        self.cache.addImage("grada","grada.png",(0.0,1.0),False,False)
+        self.cache.addImage("grada","grada.2.png",(0.0,1.0),False,False)
         self.cache.addImage("vegetacion.1","vegetacion.1.png",(0.5,1.0),False,False)
         self.cache.addImage("vegetacion.2","vegetacion.2.png",(0.5,1.0),False,False)
         self.cache.addImage("vegetacion.3","vegetacion.3.png",(0.5,1.0),False,False)
@@ -98,7 +98,7 @@ class Escenario:
         self.cache.addImage("cartel.3","cartel.3.png",(0.5,1.0),False,True)
         self.cache.addImage("cartel.4","cartel.3.png",(0.5,1.0),False,True)
 
-        self.cache.addAnimation("enemigo.1","enemigo.1.png",(0.5,1.0),False,True,ancho=64,alto=64)
+        self.cache.addAnimation("enemigo.1","enemigo.1.scale.png",(0.5,1.0),False,True,ancho=384,alto=384)
         self.cache.addAnimation("bandera.r","bandera.r.png",(0.0,5.0),False,True,ancho=486,alto=288)
         self.cache.addAnimation("bandera.v","bandera.v.png",(0.0,5.0),False,True,ancho=486,alto=288)
         self.cache.addAnimation("bandera.a","bandera.a.png",(0.0,5.0),False,True,ancho=486,alto=288)

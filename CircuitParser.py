@@ -46,7 +46,8 @@ class CircuitParser:
             "MK": self.command_mark,
             "CHK": self.command_checkpoint,
             "BMP": self.command_bumps,
-            "merge": self.command_merge
+            "merge": self.command_merge,
+            "E": self.command_enemy
         }
 
         self.last_segment=0
@@ -308,6 +309,37 @@ class CircuitParser:
             s.z + z_rel
         )
     # ============================================================
+    # E
+    # ============================================================
+    def command_enemy(self, data):
+        if not self.current_tramo:
+            raise ValueError(
+                "Command 'E' requires a previous road section"
+            )
+
+        segment = data.get("segment", 0)
+
+        try:
+            s = self.current_tramo[segment]
+        except IndexError:
+            raise ValueError(
+                f"E segment index {segment} out of range "
+                f"for current tramo ({len(self.current_tramo)} segments)"
+            )
+
+        z_rel = data.get("z", 0.0)
+        x_rel = data.get("x_rel", 0.0)
+        speed = data.get("speed", 10.0)
+
+        # Enemy
+        MapGenerator.addEnemy(
+            s,
+            z_rel,
+            x_rel,
+            speed
+        )
+
+    # ============================================================
     # BMP
     # ============================================================
     def command_bumps(self, data):
@@ -447,3 +479,4 @@ class CircuitParser:
         )
 
         self.current_tramo = self.context.road.segments[start:]
+

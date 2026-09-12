@@ -38,7 +38,14 @@ class Enemy(TempObject,Car):
                 elif vs.curve>0.0:
                     self.frame=2
                 else:
-                    self.frame=0
+                    player=self.context.player
+                    dx=self.x_rel-player.x_rel
+                    dz=self.z-player.z
+                    angulo=math.degrees(math.atan2(abs(dx),abs(dz)))
+                    if angulo>30.0:
+                        self.frame=2 if dx<0.0 else 1
+                    else:
+                        self.frame=0
             #lateral
             self.vx *= 0.95 ** (dt * 60.0)
 

@@ -78,7 +78,7 @@ class Player(Car):
         self.p_acelerador=0.0
         self.p_freno=0.0
         #marchas (velocida,torque)
-        self.marchas=[[8.0,2.5],[15.0,0.8]]
+        self.marchas=[[9.0,1.5],[16.0,0.8]]
         self.marcha=0
         self.tecla_marcha=False
         #humo
@@ -86,10 +86,10 @@ class Player(Car):
         self.smoke_timer=0.0
         #params
         self.PENALIZACION_CURVA=1.0
-        self.POTENCIA_MOTOR=7.0
-        self.FUERZA_FRENADO=7.0
-        self.RESISTENCIA_AIRE=0.0001
-        self.FRENO_MOTOR=1.0
+        self.POTENCIA_MOTOR=4.0
+        self.FUERZA_FRENADO=6.0
+        self.RESISTENCIA_AIRE=0.000015
+        self.FRENO_MOTOR=0.6
         self.INTENSIDAD_CURVA=20.0
         self.FUERZA_VOLANTE=3.0
         self.LIMITE_AGARRE=0.6

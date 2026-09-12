@@ -137,7 +137,7 @@ class Car(Object,ABC):
         # Rebote:
         # 0 = totalmente inelástico
         # 1 = perfectamente elástico
-        restitution = 0.1
+        restitution = 0.3
 
         inv_mass_sum = m1 + m2
         if inv_mass_sum == 0.0:
@@ -161,7 +161,11 @@ class Car(Object,ABC):
         vz1 = max(0.0, vz1)
         vz2 = max(0.0, vz2)
 
-        energy_loss=0.6
+        car2car_energy=2.0
+        energy_loss=0.5
+
+        if self.type!=Car.NONE and other.type!=Car.NONE:
+            energy_loss=car2car_energy
 
         if self.type!=Car.NONE:
             self.speed=vz1
