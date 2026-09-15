@@ -105,11 +105,14 @@ class Player(Car):
 
         #frame
         self.frame=0
+
+        self.cur_width=0.0
         
 
 
     def update(self, dt):
         vs=self.getVS(self.context)
+
         if self.context.keys[pygame.K_SPACE] and self.tecla_marcha==False:
             self.tecla_marcha=True
             self.cambio_marcha()
@@ -271,16 +274,16 @@ class Player(Car):
             profile=vs.visualProfile
         if profile==None:
             return Material()
-        
-        if rueda_i<vs.half_width:
+
+        if rueda_i<self.cur_width:
             material_i=0
-        elif rueda_i<vs.half_width+profile.arcen_width:
+        elif rueda_i<self.cur_width+profile.arcen_width:
             material_i=1
         else:
             material_i=2
-        if rueda_d<vs.half_width:
+        if rueda_d<self.cur_width:
             material_d=0
-        elif rueda_d<vs.half_width+profile.arcen_width:
+        elif rueda_d<self.cur_width+profile.arcen_width:
             material_d=1
         else:
             material_d=2
@@ -331,11 +334,24 @@ class Player(Car):
                     if event.enabled and self.z>=event.z+vs.start.z:
                         event.execute(self.context)
 
+    def interpolar_ancho(self,w0, w1, length, z):
+        if length == 0:
+            return w0
+        t = z / length
+        t = max(0.0, min(1.0, t))  # clamp por si z se sale del rango
+        return w0 + (w1 - w0) * t
+
     def physics(self,i_acelerador,i_freno,i_volante,dt):
         K_curva=8.0
         K_stress = 2.0
         
         vs=self.getVS(self.context)
+
+        #interpolar vs en el punto z
+
+        self.cur_width=self.interpolar_ancho(vs.w0,vs.w1,vs.length,self.z-vs.start.z)
+
+
 
         #dz con la vz del frame anterior
         dz=self.speed*dt
@@ -382,7 +398,7 @@ class Player(Car):
 
         if vs!=None:
             #posicion relativa de la curva (0.0 = interior de la curva 1.0 - exterior)
-            x_ratio = (self.x_rel + vs.half_width) / (2.0 * vs.half_width)
+            x_ratio = (self.x_rel + self.cur_width) / (2.0 * self.cur_width)
             x_ratio = max(0.0, min(1.0, x_ratio))
 
             if vs.curve > 1e-6:

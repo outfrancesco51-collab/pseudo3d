@@ -146,7 +146,7 @@ class Juego:
             " marcha: "+str(self.context.player.marcha)
         texto = self.font.render(
         txt,
-        True,              # antialiasing
+        True,              # antialiasingzzzzzz
         (255, 255, 255)    # color blanco
         )
 

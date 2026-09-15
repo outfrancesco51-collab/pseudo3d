@@ -2,7 +2,7 @@ import math
 from Point import Point
 
 class Segment:
-    def __init__(self,length=0.0,curve=0.0,height=0.0,half_width=1.0,profile=None):
+    def __init__(self,length=0.0,curve=0.0,height=0.0,profile=None,w0=1.0,w1=1.0):
         self.length=length
         self.curve=curve
         self.height=height
@@ -11,7 +11,8 @@ class Segment:
         self.z=0.0
         self.road_marks=[]
         self.events = []
-        self.half_width=half_width
+        self.w0=w0
+        self.w1=w1
         #self.heading=math.atan2(curve,height)
 
 class VisibleSegment:
@@ -38,7 +39,8 @@ class VisibleSegment:
         self.length=self.end.z-self.start.z
         self.road_marks=s.road_marks
         self.events = s.events
-        self.half_width=s.half_width
+        self.w0=s.w0
+        self.w1=s.w1
 
 class Line:
     def __init__(self,position,x,width,offset,freq,color):
@@ -57,9 +59,10 @@ class Line:
         else:
             color=None
         if color!=None:
-            width=vs.half_width
-            x1=pc1.x+((self.position*width+self.x)*pc1.z)
-            x4=pc2.x+((self.position*width+self.x)*pc2.z)
+            w0=vs.w0
+            w1=vs.w1
+            x1=pc1.x+((self.position*w0+self.x)*pc1.z)
+            x4=pc2.x+((self.position*w1+self.x)*pc2.z)
             x2=x1+(self.width*pc1.z)
             x3=x4+(self.width*pc2.z)
             y1=pc1.y

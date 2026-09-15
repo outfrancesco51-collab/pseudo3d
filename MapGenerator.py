@@ -21,18 +21,26 @@ class MapGenerator:
         MapGenerator.visualObjProfile=profile
 
     @staticmethod
-    def genSegment(type,value):
+    def genSegment(type,value,w0=1.0,w1=1.0):
         if type==MapGenerator.CURVE:
-            s=Segment(1.0,value,0.0,profile=MapGenerator.visualProfile)
+            s=Segment(1.0,value,0.0,profile=MapGenerator.visualProfile,w0=w0,w1=w1)
         if type==MapGenerator.HILL:
-            s=Segment(1.0,0.0,value,profile=MapGenerator.visualProfile)
+            s=Segment(1.0,0.0,value,profile=MapGenerator.visualProfile,w0=w0,w1=w1)
         return s
 
     @staticmethod
-    def pattern(type,curvature,length):
+    def pattern(type,curvature,length,w0=1.0,w1=1.0):
         segments=[]
+        w0_val=w0
+        if w0!=w1:
+            step=(w1-w0)/length
+        else:
+            step=0.0
         for _ in range(length):
-            segments.append(MapGenerator.genSegment(type,curvature))
+            #interpolar el ancho
+            w1_val=w0_val+step
+            segments.append(MapGenerator.genSegment(type,curvature,w0_val,w1_val))
+            w0_val=w1_val
         return segments
 
     @staticmethod
