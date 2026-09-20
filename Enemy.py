@@ -5,8 +5,7 @@ from Object import Object
 from VisualObjProfile import VisualObjProfile
 
 class Enemy(TempObject,Car):
-    def __init__(self, x_rel, z,speed,context):
-        img="enemigo.1"
+    def __init__(self, img, x_rel, z,speed,context):
         super().__init__(x_rel, z, img)
         self.collidable=True
         self.metadata=context.escenario.cache.metadata[img]
@@ -15,8 +14,8 @@ class Enemy(TempObject,Car):
         self.shadow=True
         self.context=context
         profile=VisualObjProfile()
-        profile.shadow_color=(74, 69, 64)
-        profile.shadow_alpha=100
+        profile.shadow_color=(0,0,0)
+        profile.shadow_alpha=80
         profile.shadow_width_factor=1.4
         profile.shadow_height=0.15
         profile.shadow_offset_z=0.0

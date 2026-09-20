@@ -5,9 +5,6 @@ from Object import Object
 from Event import EnemySpawn,Checkpoint,Finish
 
 class MapGenerator:
-    CURVE=0
-    HILL=1
-    NONE=0
     rng=random.Random(0)
 
     visualProfile=None
@@ -21,28 +18,20 @@ class MapGenerator:
         MapGenerator.visualObjProfile=profile
 
     @staticmethod
-    def genSegment(type,value,w0=1.0,w1=1.0):
-        if type==MapGenerator.CURVE:
-            s=Segment(1.0,value,0.0,profile=MapGenerator.visualProfile,w0=w0,w1=w1)
-        if type==MapGenerator.HILL:
-            s=Segment(1.0,0.0,value,profile=MapGenerator.visualProfile,w0=w0,w1=w1)
-        return s
+    def genSegment(curve,height,w0=1.0,w1=1.0):
+        return Segment(1.0,curve,height,profile=MapGenerator.visualProfile,w0=w0,w1=w1)
 
     @staticmethod
-    def pattern(type,curvature,length,w0=1.0,w1=1.0):
+    def pattern(curve,height,length,w0=1.0,w1=1.0):
         segments=[]
         w0_val=w0
-        if w0!=w1:
-            step=(w1-w0)/length
-        else:
-            step=0.0
+        step=(w1-w0)/length if w0!=w1 else 0.0
         for _ in range(length):
-            #interpolar el ancho
             w1_val=w0_val+step
-            segments.append(MapGenerator.genSegment(type,curvature,w0_val,w1_val))
+            segments.append(MapGenerator.genSegment(curve,height,w0_val,w1_val))
             w0_val=w1_val
         return segments
-
+    
     @staticmethod
     def values(max,length):
         values=[]
@@ -61,22 +50,6 @@ class MapGenerator:
     def smoothstep(t):
         return (3*(t*t)) - (2*(t*t*t))
     
-    @staticmethod
-    def merge(curve,hill):
-        base=curve
-        sec=hill
-        c2h=False
-        if len(hill)>len(curve):
-            base=hill
-            sec=curve
-            c2h=True
-        for i in range(len(sec)):
-            if c2h:
-                base[i].curve=sec[i].curve
-            else:
-                base[i].height=sec[i].height
-        return base
-
     @staticmethod
     def objects(objetos,tramo,image,step,offset,x,random_x=0.0,random_step=0.0,profile=None,collidable=True,anim=False,frametime=0.1):
         z_pos=tramo[0].z+offset
@@ -125,8 +98,8 @@ class MapGenerator:
         s.road_marks.append(rm)
 
     @staticmethod
-    def addEnemy(s:Segment,z_rel, x_rel,speed):
-        e=EnemySpawn(z_rel,x_rel,speed)
+    def addEnemy(s:Segment,z_rel, x_rel,speed,img):
+        e=EnemySpawn(z_rel,x_rel,speed,img)
         s.events.append(e)
 
 
@@ -140,3 +113,11 @@ class MapGenerator:
         e=Finish(z_rel)
         s.events.append(e)
 
+    @staticmethod
+    def branch(primary_segments,branch_segments,offset=0.0,heading=0.0):
+        for primary,seg in zip(primary_segments,branch_segments):
+            seg.offset=offset
+            seg.heading=heading
+            heading+=seg.curve-primary.curve
+            offset+=heading
+        return offset,heading

@@ -1,6 +1,7 @@
 import yaml
 
 from MapGenerator import MapGenerator
+from Road import Branch
 
 
 class CircuitParser:
@@ -17,15 +18,11 @@ class CircuitParser:
         "frametime": 0.1,
     }
 
-    def __init__(self, context, curve_right, curve_left, curve_hard_right, curve_hard_left, hill, down, profiles=None):
+    def __init__(self, context, curves, heights, profiles=None):
         self.context = context
 
-        self.curve_right = curve_right
-        self.curve_left = curve_left
-        self.curve_hard_right = curve_hard_right
-        self.curve_hard_left = curve_hard_left
-        self.hill = hill
-        self.down = down
+        self.curves = curves
+        self.heights = heights
 
         self.profiles = profiles if profiles is not None else {}
 
@@ -33,20 +30,14 @@ class CircuitParser:
         self.checkpoints = []
 
         self.commands = {
-            "CR": self.command_road,
-            "CL": self.command_road,
-            "CHR": self.command_road,
-            "CHL": self.command_road,
-            "H": self.command_road,
-            "D": self.command_road,
-            "S": self.command_road,
+            "R": self.command_road,
             "O": self.command_object,
             "V": self.command_vegetation,
             "F": self.command_forest,
             "MK": self.command_mark,
             "CHK": self.command_checkpoint,
             "BMP": self.command_bumps,
-            "merge": self.command_merge,
+            "branch": self.command_branch,
             "E": self.command_enemy
         }
 
@@ -162,11 +153,17 @@ class CircuitParser:
 
     def command_road(self, data):
 
+        pattern = self.parse_pattern(data)
+
+        branch_id = data.get("branch", 0)
+
+        if branch_id != 0:
+            self.add_to_branch(branch_id, pattern)
+            return
+
         self.last_segment=len(self.context.road.segments)-1
 
         start = self.last_segment+1
-
-        pattern = self.parse_pattern(data)
 
         self.context.road.add(pattern)
 
@@ -330,13 +327,15 @@ class CircuitParser:
         z_rel = data.get("z", 0.0)
         x_rel = data.get("x_rel", 0.0)
         speed = data.get("speed", 10.0)
+        img = data.get("img","enemigo.1")
 
         # Enemy
         MapGenerator.addEnemy(
             s,
             z_rel,
             x_rel,
-            speed
+            speed,
+            img
         )
 
     # ============================================================
@@ -388,95 +387,94 @@ class CircuitParser:
 
 
     def parse_pattern(self, data):
-
         command = data.get("command")
 
-        if command is None:
-            raise ValueError("Pattern without 'command'")
+        if command != "R":
+            raise ValueError(
+                f"Unknown pattern command '{command}'"
+            )
 
         segments = data.get("segments")
 
         if segments is None:
             raise ValueError(
-                f"Pattern '{command}' requires 'segments'"
+                "Pattern 'R' requires 'segments'"
             )
 
-        if command == "S":
-            return MapGenerator.pattern(
-                MapGenerator.NONE,
-                0.0,
-                segments
-            )
+        w0 = data.get("w0", 1.0)
+        w1 = data.get("w1", 1.0)
+        curve = self.get_constant(self.curves, data.get("curve"), "curve")
+        height = self.get_constant(self.heights, data.get("height"), "height")
 
-        if command == "CR":
-            return MapGenerator.pattern(
-                MapGenerator.CURVE,
-                self.curve_right,
-                segments
-            )
+        return MapGenerator.pattern(curve, height, segments, w0, w1)
 
-        if command == "CL":
-            return MapGenerator.pattern(
-                MapGenerator.CURVE,
-                self.curve_left,
-                segments
-            )
+    def get_constant(self, table, key, kind):
+        if key is None:
+            return 0.0
 
-        if command == "H":
-            return MapGenerator.pattern(
-                MapGenerator.HILL,
-                self.hill,
-                segments
-            )
-
-        if command == "D":
-            return MapGenerator.pattern(
-                MapGenerator.HILL,
-                self.down,
-                segments
-            )
-
-        if command == "CHR":
-            return MapGenerator.pattern(
-                MapGenerator.CURVE,
-                self.curve_hard_right,
-                segments
-            )
-
-        if command == "CHL":
-            return MapGenerator.pattern(
-                MapGenerator.CURVE,
-                self.curve_hard_left,
-                segments
-            )
-
-        raise ValueError(
-            f"Unknown pattern command '{command}'"
-        )
-
-    def command_merge(self, data):
-
-        op1 = data.get("op1")
-        op2 = data.get("op2")
-
-        if op1 is None or op2 is None:
+        if key not in table:
             raise ValueError(
-                "Command 'merge' requires 'op1' and 'op2'"
+                f"Unknown {kind} constant '{key}'"
             )
 
-        pattern1 = self.parse_pattern(op1)
-        pattern2 = self.parse_pattern(op2)
+        return table[key]
 
-        self.last_segment=len(self.context.road.segments)-1
+    # ============================================================
+    # BRANCH
+    # ============================================================
 
-        start = self.last_segment+1
+    def command_branch(self, data):
+        road = self.context.road
 
-        self.context.road.add(
-            MapGenerator.merge(
-                pattern1,
-                pattern2
+        branch_id = data.get("id")
+
+        if branch_id != len(road.branches):
+            raise ValueError(
+                f"Branch id must be {len(road.branches)} (next free), got {branch_id}"
             )
+
+        offset = data.get("offset", 0.0)
+
+        # la rama empieza en el próximo segmento de la primaria
+        road.branches.append(Branch(len(road.segments), offset))
+
+    def add_to_branch(self, branch_id, pattern):
+        road = self.context.road
+
+        if (
+            not isinstance(branch_id, int)
+            or isinstance(branch_id, bool)
+            or not 0 < branch_id < len(road.branches)
+        ):
+            raise ValueError(
+                f"Unknown branch '{branch_id}' (define it first with 'branch')"
+            )
+
+        branch = road.branches[branch_id]
+
+        first = branch.first_index + len(branch.segments)
+        last = first + len(pattern)
+
+        if last > len(road.segments):
+            raise ValueError(
+                f"Branch {branch_id} needs {last - len(road.segments)} more "
+                f"primary segments than exist"
+            )
+
+        primary = road.segments[first:last]
+
+        # la rama primaria manda: longitud, altura y alineación
+        for p, s in zip(primary, pattern):
+            s.index = p.index
+            s.z = p.z
+            s.length = p.length
+            s.height = p.height
+
+        branch.offset, branch.heading = MapGenerator.branch(
+            primary,
+            pattern,
+            branch.offset,
+            branch.heading
         )
 
-        self.current_tramo = self.context.road.segments[start:]
-
+        branch.segments.extend(pattern)

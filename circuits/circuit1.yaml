@@ -2,7 +2,7 @@ circuit:
   sections:
     - name: "salida"
       data: [
-        {command: "S", segments: 70},
+        {command: "R", segments: 70},
         {command: "O",segments: 4,img: "start",step: 10.0,offset: 3.0,x: 0.0,collidable: false },
         {command: "O",segments: 4,img: "column",step: 10.0,offset: 3.0,x: 1.11,collidable: false },
         {command: "O",segments: 4,img: "column",step: 10.0,offset: 3.0,x: -1.11,collidable: false },
@@ -29,12 +29,12 @@ circuit:
         {command: "V",segments: 70,img: "vegetacion.1", x: 1.7, step_x: 1.0, step_z: 6.0, offset: 30.0, number: 3},
         {command: "V",segments: 70,img: "vegetacion.2", x: 1.7, step_x: 1.0, step_z: 6.0, offset: 33.0, number: 3},
 
-        {command: "E",segment: -1, x_rel: 0.0, speed: 9.0},
+        {command: "E",segment: -1, x_rel: 0.0, speed: 9.0, img: "enemigo.2"},
       ]
     - name: "primeras_curvas"
       data: [
         # --- Primera curva derecha: AVENIDA ---
-        {command: "CR", segments: 45},
+        {command: "R", segments: 45, curve: "CR"},
         {command: "O", img: "farola.flip", step: 5.0, offset: 0.0, x: -1.4, random_step: 0.5},
         {command: "O", img: "farola", step: 5.0, offset: 2.5, x: 1.4, random_step: 0.5},
         {command: "V", img: "vegetacion.1", x: 1.95, step_x: 0.9, step_z: 5.0, offset: 0.0, number: 2},
@@ -45,7 +45,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Pequeño descanso: transición avenida -> bosque ---
-        {command: "S", segments: 25},
+        {command: "R", segments: 25},
         {command: "F", img: "arbol", x: 1.5, step_x: 0.8, step_z: 7.0, offset: 0.0, number: 2, random_x: 0.25, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 1.5, step_x: 0.8, step_z: 7.0, offset: 3.5, number: 1, random_x: 0.25, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 1.5, step_x: 0.8, step_z: 7.0, offset: 0.0, number: 1, random_x: 0.25, random_step: 1.5},
@@ -56,7 +56,7 @@ circuit:
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Curva izquierda: BOSQUE ---
-        {command: "CL", segments: 55},
+        {command: "R", segments: 55, curve: "CL"},
         {command: "V", img: "vegetacion.3", x: 2.05, step_x: 0.9, step_z: 4.0, offset: 0.0, number: 3},
         {command: "F", img: "arbol", x: 1.5, step_x: 0.75, step_z: 8.0, offset: 0.0, number: 3, random_x: 0.30, random_step: 3.0},
         {command: "F", img: "arbol.2", x: 1.5, step_x: 0.75, step_z: 8.0, offset: 4.0, number: 3, random_x: 0.30, random_step: 3.0},
@@ -68,10 +68,10 @@ circuit:
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 25, x_rel: -0.2, speed: 8.5},
+        {command: "E", segment: 25, x_rel: -0.2, speed: 8.5, img: "enemigo.1"},
 
         # --- Recta dentro del bosque ---
-        {command: "S", segments: 45},
+        {command: "R", segments: 45},
         {command: "V", img: "vegetacion.1", x: 1.95, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
         {command: "V", img: "vegetacion.2", x: 1.95, step_x: 1.0, step_z: 5.0, offset: 2.5, number: 2},
         {command: "F", img: "arbol", x: 1.5, step_x: 0.75, step_z: 8.0, offset: 1.0, number: 3, random_x: 0.30, random_step: 3.0},
@@ -84,10 +84,10 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -15, x_rel: 0.2, speed: 8.5},
+        {command: "E", segment: -15, x_rel: 0.2, speed: 8.5, img: "enemigo.2"},
 
         # --- Curva larga derecha: salimos ligeramente del bosque ---
-        {command: "CR", segments: 70},
+        {command: "R", segments: 70, curve: "CR"},
         {command: "V", img: "vegetacion.1", x: 1.95, step_x: 0.9, step_z: 5.0, offset: 0.0, number: 2},
         {command: "V", img: "vegetacion.2", x: 1.95, step_x: 0.9, step_z: 5.0, offset: 2.5, number: 2},
         {command: "F", img: "arbol.2", x: 1.8, step_x: 0.8, step_z: 9.0, offset: 1.0, number: 2, random_x: 0.30, random_step: 3.0},
@@ -97,10 +97,10 @@ circuit:
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 30, x_rel: -0.25, speed: 9.0},
+        {command: "E", segment: 30, x_rel: -0.25, speed: 9.0, img: "enemigo.1"},
 
         # --- Recta antes de enlazadas: claro parcial ---
-        {command: "S", segments: 25},
+        {command: "R", segments: 25},
         {command: "V", img: "vegetacion.3", x: 2.0, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
         {command: "F", img: "arbol.3", x: 1.9, step_x: 0.9, step_z: 10.0, offset: 2.0, number: 1, random_x: 0.25, random_step: 2.0},
         {command: "F", img: "arbol.4", x: 2.0, step_x: 0.9, step_z: 10.0, offset: 6.0, number: 1, random_x: 0.25, random_step: 2.0},
@@ -111,7 +111,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Enlazadas sencillas R -> L ---
-        {command: "CR", segments: 45},
+        {command: "R", segments: 45, curve: "CR"},
         {command: "F", img: "arbol.2", x: 1.5, step_x: 0.75, step_z: 7.0, offset: 0.0, number: 3, random_x: 0.30, random_step: 3.0},
         {command: "F", img: "arbol.3", x: 1.9, step_x: 0.8, step_z: 9.0, offset: 3.0, number: 2, random_x: 0.30, random_step: 3.0},
         {command: "V", img: "vegetacion.1", x: 1.95, step_x: 1.0, step_z: 4.5, offset: 0.5, number: 2},
@@ -120,7 +120,7 @@ circuit:
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "CL", segments: 55},
+        {command: "R", segments: 55, curve: "CL"},
         {command: "F", img: "arbol", x: 1.5, step_x: 0.75, step_z: 7.0, offset: 2.0, number: 3, random_x: 0.30, random_step: 3.0},
         {command: "F", img: "arbol.4", x: 1.9, step_x: 0.8, step_z: 9.0, offset: 5.0, number: 2, random_x: 0.30, random_step: 3.0},
         {command: "V", img: "vegetacion.2", x: 1.95, step_x: 1.0, step_z: 4.5, offset: 0.0, number: 2},
@@ -129,10 +129,10 @@ circuit:
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -20, x_rel: 0.25, speed: 9.0},
+        {command: "E", segment: -20, x_rel: 0.25, speed: 9.0, img: "enemigo.2"},
 
         # --- Fin de la zona de aprendizaje: abrimos la carretera ---
-        {command: "S", segments: 35},
+        {command: "R", segments: 35},
         {command: "V", img: "vegetacion.3", x: 2.0, step_x: 1.0, step_z: 5.0, offset: 0.0, number: 2},
         {command: "F", img: "arbol.2", x: 1.9, step_x: 0.9, step_z: 10.0, offset: 2.0, number: 2, random_x: 0.25, random_step: 2.5},
         {command: "F", img: "arbol.3", x: 2.0, step_x: 0.9, step_z: 10.0, offset: 7.0, number: 1, random_x: 0.25, random_step: 2.5},
@@ -153,7 +153,7 @@ circuit:
     - name: "primera_seccion_enlazadas"
       data: [
         # --- Primera izquierda ---
-        {command: "CL", segments: 45},
+        {command: "R", segments: 45, curve: "CL"},
         {command: "O", img: "arbol", step: 4.5, offset: 0.0, x: -1.45, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol.2", step: 5.5, offset: 2.0, x: 1.45, random_x: 0.25, random_step: 1.0},
         {command: "O", img: "arbol.3", step: 6.5, offset: 1.0, x: -1.75, random_x: -0.30, random_step: 1.3},
@@ -169,7 +169,7 @@ circuit:
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Derecha: seguimos en el bosque pero cambiamos especies ---
-        {command: "CR", segments: 45},
+        {command: "R", segments: 45, curve: "CR"},
         {command: "O", img: "arbol.2", step: 5.0, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol", step: 4.5, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 1.0},
         {command: "O", img: "arbol.4", step: 7.0, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.3},
@@ -181,10 +181,10 @@ circuit:
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 20, x_rel: -0.2, speed: 9.0},
+        {command: "E", segment: 20, x_rel: -0.2, speed: 9.0, img: "enemigo.1"},
 
         # --- Segunda derecha, corta: pequeño claro lateral ---
-        {command: "CR", segments: 35},
+        {command: "R", segments: 35, curve: "CR"},
         {command: "O", img: "arbol", step: 4.5, offset: 0.0, x: -1.45, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol.3", step: 6.5, offset: 2.0, x: -1.8, random_x: -0.30, random_step: 1.3},
         {command: "O", img: "arbol.4", step: 9.0, offset: 4.0, x: -2.1, random_x: -0.35, random_step: 1.8},
@@ -195,7 +195,7 @@ circuit:
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Izquierda larga de salida: el bosque vuelve a cerrarse ---
-        {command: "CL", segments: 55},
+        {command: "R", segments: 55, curve: "CL"},
         {command: "O", img: "arbol.2", step: 4.5, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 0.9},
         {command: "O", img: "arbol", step: 5.0, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 0.9},
         {command: "O", img: "arbol.3", step: 6.5, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.2},
@@ -210,10 +210,10 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -20, x_rel: 0.2, speed: 9.5},
+        {command: "E", segment: -20, x_rel: 0.2, speed: 9.5, img: "enemigo.2"},
 
         # --- Recta de salida: el bosque empieza a abrirse antes del checkpoint ---
-        {command: "S", segments: 35},
+        {command: "R", segments: 35},
         {command: "O", img: "arbol.3", step: 7.0, offset: 0.0, x: -1.7, random_x: -0.30, random_step: 1.5},
         {command: "O", img: "arbol.4", step: 8.0, offset: 3.0, x: 1.7, random_x: 0.30, random_step: 1.5},
         {command: "O", img: "arbusto", step: 4.0, offset: 1.0, x: -1.45, random_x: -0.20, random_step: 1.0, collidable: false},
@@ -223,7 +223,7 @@ circuit:
       ]
     - name: "primer_checkpoint_y_repechos"
       data: [
-        {command: "S", segments: 25},
+        {command: "R", segments: 25},
         {command: "CHK", segment: 0, z: 0.25, time: 55.0},
         {command: "MK", segment: 0, img: "parrilla", x: -1.0, z: 0.25, w: 0.5, h: 0.5},
         {command: "MK", segment: 0, img: "parrilla", x: -0.5, z: 0.25, w: 0.5, h: 0.5},
@@ -235,14 +235,14 @@ circuit:
         {command: "O", img: "cartel.3", segments: 16, step: 2.0, offset: 7.0, x: 1.9, collidable: false},
         {command: "O", img: "cartel.4", step: 2.0, offset: 17.0, x: 1.9, collidable: false},
 
-        {command: "E", segment: 10, x_rel: 0.25, speed: 9.0},
+        {command: "E", segment: 10, x_rel: 0.25, speed: 9.0, img: "enemigo.1"},
 
         {command: "V", img: "vegetacion.2", x: 4.0, step_x: 1.3, step_z: 8.0, offset: 1.0, number: 1},
         {command: "F", img: "arbol.2", x: 5.0, step_x: 1.2, step_z: 9.0, offset: 1.0, number: 1, random_x: 0.60, random_step: 3.0},
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "S", segments: 20},
+        {command: "R", segments: 20},
         {command: "V", img: "vegetacion.2", x: 2.0, step_x: 1.0, step_z: 4.5, offset: 0.5, number: 2},
         {command: "F", img: "arbol", x: 1.6, step_x: 0.8, step_z: 8.0, offset: 2.0, number: 2, random_x: 0.25, random_step: 2.0},
         {command: "F", img: "arbol.2", x: 2.0, step_x: 0.9, step_z: 10.0, offset: 6.0, number: 1, random_x: 0.25, random_step: 2.0},
@@ -252,7 +252,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 1.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -3, x_rel: -0.2, speed: 9.5},
+        {command: "E", segment: -3, x_rel: -0.2, speed: 9.5, img: "enemigo.2"},
 
         {command: "O", img: "rasante", step: 30.0, offset: 17.0, x: -1.4, collidable: true},
         {command: "O", img: "rasante", step: 30.0, offset: 17.0, x: 1.4, collidable: true},
@@ -268,7 +268,7 @@ circuit:
       ]
     - name: "rasantes_y_curvas"
       data: [
-        {command: "merge", op1: {command: "CR", segments: 30}, op2: {command: "H", segments: 30}},
+        {command: "R", segments: 30, curve: "CR", height: "H"},
         {command: "O", img: "arbusto", step: 3.5, offset: 0.0, x: -1.45, random_x: -0.25, random_step: 0.8, collidable: false},
         {command: "O", img: "arbusto", step: 4.0, offset: 1.5, x: 1.45, random_x: 0.25, random_step: 0.8, collidable: false},
         {command: "O", img: "arbol.2", step: 9.0, offset: 2.0, x: -1.8, random_x: -0.30, random_step: 2.0},
@@ -279,7 +279,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "merge", op1: {command: "CL", segments: 25}, op2: {command: "D", segments: 25}},
+        {command: "R", segments: 25, curve: "CL", height: "D"},
         {command: "O", img: "arbusto", step: 3.5, offset: 0.0, x: -1.45, random_x: -0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbol.4", step: 9.0, offset: 3.0, x: -1.9, random_x: -0.30, random_step: 2.0},
         {command: "O", img: "arbol", step: 6.0, offset: 0.0, x: 1.55, random_x: 0.25, random_step: 1.2},
@@ -291,9 +291,9 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 12, x_rel: 0.25, speed: 9.5},
+        {command: "E", segment: 12, x_rel: 0.25, speed: 9.5, img: "enemigo.1"},
 
-        {command: "merge", op1: {command: "CL", segments: 35}, op2: {command: "H", segments: 35}},
+        {command: "R", segments: 35, curve: "CL", height: "H"},
         {command: "O", img: "arbol.2", step: 5.5, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol", step: 6.0, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 1.0},
         {command: "O", img: "arbol.3", step: 7.5, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.4},
@@ -305,9 +305,9 @@ circuit:
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -15, x_rel: -0.25, speed: 10.0},
+        {command: "E", segment: -15, x_rel: -0.25, speed: 10.0, img: "enemigo.2"},
 
-        {command: "S", segments: 30},
+        {command: "R", segments: 30},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.5, random_x: -0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbusto", step: 4.5, offset: 2.0, x: 1.5, random_x: 0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbol.3", step: 9.0, offset: 1.0, x: -1.9, random_x: -0.30, random_step: 2.0},
@@ -328,7 +328,7 @@ circuit:
     - name: "tramo_rapido"
       data: [
         # --- Curva derecha larga ---
-        {command: "CR", segments: 65},
+        {command: "R", segments: 65, curve: "CR"},
         {command: "O", img: "arbol.2", step: 5.0, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol", step: 5.5, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 1.0},
         {command: "O", img: "arbol.3", step: 7.0, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.4},
@@ -343,7 +343,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
 
         # --- Recta rápida: avenida de farolas ---
-        {command: "S", segments: 45},
+        {command: "R", segments: 45},
         {command: "O", img: "farola.flip", step: 4.5, offset: 0.0, x: -1.4, random_step: 0.4},
         {command: "O", img: "farola", step: 4.5, offset: 2.25, x: 1.4, random_step: 0.4},
         {command: "O", img: "arbusto", step: 5.0, offset: 1.0, x: -1.65, random_x: -0.25, random_step: 1.0, collidable: false},
@@ -354,11 +354,11 @@ circuit:
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 0.0, number: 1, random_x: 1.50, random_step: 4.0},
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
 
-        {command: "E", segment: 18, x_rel: 0.3, speed: 10.0},
-        {command: "E", segment: 32, x_rel: -0.3, speed: 10.0},
+        {command: "E", segment: 18, x_rel: 0.3, speed: 10.0, img: "enemigo.1"},
+        {command: "E", segment: 32, x_rel: -0.3, speed: 10.0, img: "enemigo.2"},
 
         # --- Curva izquierda larga ---
-        {command: "CL", segments: 60},
+        {command: "R", segments: 60, curve: "CL"},
         {command: "O", img: "arbol.3", step: 4.5, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 0.9},
         {command: "O", img: "arbol.2", step: 5.0, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 0.9},
         {command: "O", img: "arbol", step: 6.5, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.3},
@@ -373,7 +373,7 @@ circuit:
         {command: "F", img: "arbol.2", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
 
         # --- Recta final (bosque se abre progresivamente) ---
-        {command: "S", segments: 40},
+        {command: "R", segments: 40},
         {command: "O", img: "arbol.2", step: 7.0, offset: 0.0, x: -1.55, random_x: -0.25, random_step: 1.5},
         {command: "O", img: "arbol.3", step: 8.0, offset: 3.0, x: 1.55, random_x: 0.25, random_step: 1.5},
         {command: "O", img: "arbol.4", step: 10.0, offset: 2.0, x: -1.9, random_x: -0.30, random_step: 2.0},
@@ -392,7 +392,7 @@ circuit:
         {command: "O", img: "curva.s", step: 30.0, offset: 37.0, x: -1.3, collidable: true},
 
         # --- Subida + derecha ---
-        {command: "merge", op1: {command: "CR", segments: 18}, op2: {command: "H", segments: 18}},
+        {command: "R", segments: 18, curve: "CR", height: "H"},
         {command: "O", img: "arbusto", step: 3.5, offset: 0.0, x: -1.45, random_x: -0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbusto", step: 4.0, offset: 1.5, x: 1.45, random_x: 0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbol.3", step: 9.0, offset: 2.0, x: -1.9, random_x: -0.30, random_step: 2.0},
@@ -401,7 +401,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Bajada + izquierda ---
-        {command: "merge", op1: {command: "CL", segments: 18}, op2: {command: "D", segments: 18}},
+        {command: "R", segments: 18, curve: "CL", height: "D"},
         {command: "O", img: "arbusto", step: 3.5, offset: 0.0, x: -1.45, random_x: -0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbusto", step: 4.0, offset: 2.0, x: 1.45, random_x: 0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbol.2", step: 8.0, offset: 1.0, x: 1.85, random_x: 0.30, random_step: 1.8},
@@ -409,17 +409,17 @@ circuit:
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Nueva subida + derecha ---
-        {command: "merge", op1: {command: "CR", segments: 20}, op2: {command: "H", segments: 20}},
+        {command: "R", segments: 20, curve: "CR", height: "H"},
         {command: "O", img: "arbusto", step: 3.5, offset: 0.0, x: -1.45, random_x: -0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "arbusto", step: 4.0, offset: 2.0, x: 1.45, random_x: 0.20, random_step: 0.8, collidable: false},
         {command: "O", img: "piedra", step: 13.0, offset: 3.0, x: -1.55, random_x: -0.20, random_step: 2.5, profile: "piedra"},
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 10, x_rel: -0.2, speed: 10.5},
+        {command: "E", segment: 10, x_rel: -0.2, speed: 10.5, img: "enemigo.2"},
 
         # --- Pequeño respiro (limpio para las flechas) ---
-        {command: "S", segments: 18},
+        {command: "R", segments: 18},
         {command: "O", img: "arbusto", step: 4.5, offset: 0.0, x: -1.55, random_x: -0.20, random_step: 1.0, collidable: false},
         {command: "O", img: "arbusto", step: 5.0, offset: 2.0, x: 1.55, random_x: 0.20, random_step: 1.0, collidable: false},
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
@@ -441,12 +441,12 @@ circuit:
         {command: "F", img: "arbol.2", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -6, x_rel: 0.2, speed: 10.5},
+        {command: "E", segment: -6, x_rel: 0.2, speed: 10.5, img: "enemigo.1"},
 
         # --- Curva cerrada derecha (peligro importante, quitamiedos) ---
         {command: "O", img: "curva", step: 30.0, offset: 13.0, x: 1.3, collidable: true},
 
-        {command: "CHR", segments: 45},
+        {command: "R", segments: 45, curve: "CHR"},
 
         {command: "O", img: "piedra", segments: 1, step: 10.0, offset: 0.0, x: -1.4, profile: "piedra"},
         {command: "O", img: "piedra", segments: 1, step: 10.0, offset: 0.0, x: 1.4, profile: "piedra"},
@@ -464,7 +464,7 @@ circuit:
         {command: "F", img: "arbol.4", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Recta después de la trampa ---
-        {command: "S", segments: 30},
+        {command: "R", segments: 30},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.5, random_x: -0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbusto", step: 4.5, offset: 2.0, x: 1.5, random_x: 0.20, random_step: 0.9, collidable: false},
         {command: "V", img: "vegetacion.3", x: 2.3, step_x: 1.0, step_z: 6.5, offset: 0.5, number: 1},
@@ -479,7 +479,7 @@ circuit:
         {command: "O", img: "curva.s", step: 30.0, offset: 27.0, x: -1.3, collidable: true},
 
         # --- Izquierda ---
-        {command: "CL", segments: 50},
+        {command: "R", segments: 50, curve: "CL"},
         {command: "O", img: "arbol", step: 4.5, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 0.9},
         {command: "O", img: "arbol.2", step: 5.0, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 0.9},
         {command: "O", img: "arbol.3", step: 6.5, offset: 1.0, x: -1.8, random_x: -0.30, random_step: 1.3},
@@ -489,10 +489,10 @@ circuit:
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 0.0, number: 1, random_x: 1.50, random_step: 4.0},
         {command: "F", img: "arbol.2", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
 
-        {command: "E", segment: 25, x_rel: 0.2, speed: 10.5},
+        {command: "E", segment: 25, x_rel: 0.2, speed: 10.5, img: "enemigo.2"},
 
         # --- Derecha ---
-        {command: "CR", segments: 45},
+        {command: "R", segments: 45, curve: "CR"},
         {command: "O", img: "arbol.2", step: 4.5, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 0.9},
         {command: "O", img: "arbol", step: 5.0, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 0.9},
         {command: "O", img: "arbol.4", step: 7.0, offset: 1.0, x: -1.85, random_x: -0.30, random_step: 1.3},
@@ -505,7 +505,7 @@ circuit:
         # --- Curva cerrada izquierda (señal existente, despejamos alrededor) ---
         {command: "O", img: "curva.flip", step: 30.0, offset: 42.0, x: -1.3, collidable: true},
 
-        {command: "CHL", segments: 38},
+        {command: "R", segments: 38, curve: "CHL"},
         {command: "O", img: "quitamiedos", step: 0.1, offset: 0.03, x: 1.3},
         {command: "O", img: "poste", step: 1.0, offset: 0.1, x: 1.3, profile: "poste"},
         {command: "O", img: "arbol.3", step: 8.0, offset: 0.0, x: -1.9, random_x: -0.30, random_step: 1.5},
@@ -518,10 +518,10 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -8, x_rel: -0.25, speed: 10.5},
+        {command: "E", segment: -8, x_rel: -0.25, speed: 10.5, img: "enemigo.1"},
 
         # --- Recta hacia checkpoint ---
-        {command: "S", segments: 45},
+        {command: "R", segments: 45},
         {command: "O", img: "arbol.2", step: 7.0, offset: 0.0, x: -1.65, random_x: -0.25, random_step: 1.5},
         {command: "O", img: "arbol.3", step: 8.0, offset: 3.0, x: 1.65, random_x: 0.25, random_step: 1.5},
         {command: "O", img: "arbusto", step: 4.0, offset: 1.0, x: -1.45, random_x: -0.20, random_step: 0.9, collidable: false},
@@ -533,7 +533,7 @@ circuit:
       ]
     - name: "segundo_checkpoint"
       data: [
-        {command: "S", segments: 25},
+        {command: "R", segments: 25},
         {command: "CHK", segment: 0, z: 0.25, time: 45.0},
         {command: "MK", segment: 0, img: "parrilla", x: -1.0, z: 0.25, w: 0.5, h: 0.5},
         {command: "MK", segment: 0, img: "parrilla", x: -0.5, z: 0.25, w: 0.5, h: 0.5},
@@ -545,7 +545,7 @@ circuit:
         {command: "O", img: "cartel.3", segments: 16, step: 2.0, offset: 7.0, x: 1.9, collidable: false},
         {command: "O", img: "cartel.4", step: 2.0, offset: 17.0, x: 1.9, collidable: false},
 
-        {command: "E", segment: 10, x_rel: -0.25, speed: 10.0},
+        {command: "E", segment: 10, x_rel: -0.25, speed: 10.0, img: "enemigo.2"},
 
         {command: "O", img: "arbol.3", step: 11.0, offset: 4.0, x: -2.0, random_x: -0.30, random_step: 2.0},
         {command: "O", img: "arbol.4", step: 12.0, offset: 6.0, x: 2.0, random_x: 0.30, random_step: 2.0},
@@ -559,7 +559,7 @@ circuit:
     - name: "gran_curva_contracurva"
       data: [
         # --- Derecha + subida ---
-        {command: "merge", op1: {command: "CR", segments: 65}, op2: {command: "H", segments: 65}},
+        {command: "R", segments: 65, curve: "CR", height: "H"},
         {command: "O", img: "arbol.2", step: 6.0, offset: 0.0, x: -1.6, random_x: -0.25, random_step: 1.2},
         {command: "O", img: "arbol", step: 6.5, offset: 2.0, x: 1.6, random_x: 0.25, random_step: 1.2},
         {command: "O", img: "arbol.3", step: 8.0, offset: 1.0, x: -1.9, random_x: -0.30, random_step: 1.5},
@@ -568,7 +568,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Izquierda + bajada ---
-        {command: "merge", op1: {command: "CL", segments: 70}, op2: {command: "D", segments: 70}},
+        {command: "R", segments: 70, curve: "CL", height: "D"},
         {command: "O", img: "arbol.3", step: 6.0, offset: 0.0, x: -1.6, random_x: -0.25, random_step: 1.2},
         {command: "O", img: "arbol.2", step: 6.5, offset: 2.0, x: 1.6, random_x: 0.25, random_step: 1.2},
         {command: "O", img: "arbol.4", step: 8.0, offset: 1.0, x: -1.9, random_x: -0.30, random_step: 1.5},
@@ -576,10 +576,10 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 35, x_rel: -0.25, speed: 11.0},
+        {command: "E", segment: 35, x_rel: -0.25, speed: 11.0, img: "enemigo.1"},
 
         # --- Recta larga (abrimos para las flechas) ---
-        {command: "S", segments: 45},
+        {command: "R", segments: 45},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.5, random_x: -0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbusto", step: 4.5, offset: 2.0, x: 1.5, random_x: 0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbol.3", step: 10.0, offset: 2.0, x: -2.0, random_x: -0.30, random_step: 2.0},
@@ -590,7 +590,7 @@ circuit:
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 0.0, number: 1, random_x: 1.50, random_step: 4.0},
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
 
-        {command: "E", segment: 22, x_rel: 0.3, speed: 11.0},
+        {command: "E", segment: 22, x_rel: 0.3, speed: 11.0, img: "enemigo.1"},
 
         {command: "MK", segment: -20, img: "flecha.1", x: -0.9, z: 0.0, w: 0.5, h: 1.0},
         {command: "MK", segment: -21, img: "flecha.2", x: -0.9, z: 0.0, w: 0.5, h: 1.0},
@@ -602,7 +602,7 @@ circuit:
     - name: "tramo_final"
       data: [
         # --- Curva derecha ---
-        {command: "CR", segments: 55},
+        {command: "R", segments: 55, curve: "CR"},
         {command: "O", img: "arbol.2", step: 5.0, offset: 0.0, x: -1.5, random_x: -0.25, random_step: 1.0},
         {command: "O", img: "arbol", step: 5.5, offset: 2.0, x: 1.5, random_x: 0.25, random_step: 1.0},
         {command: "O", img: "arbol.4", step: 7.0, offset: 1.0, x: -1.85, random_x: -0.30, random_step: 1.3},
@@ -612,10 +612,10 @@ circuit:
         {command: "F", img: "arbol", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: 25, x_rel: 0.25, speed: 11.0},
+        {command: "E", segment: 25, x_rel: 0.25, speed: 11.0, img: "enemigo.2"},
 
         # --- Recta ---
-        {command: "S", segments: 35},
+        {command: "R", segments: 35},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.45, random_x: -0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbusto", step: 4.5, offset: 2.0, x: 1.45, random_x: 0.20, random_step: 0.9, collidable: false},
         {command: "V", img: "vegetacion.2", x: 4.0, step_x: 1.3, step_z: 8.0, offset: 1.0, number: 1},
@@ -627,7 +627,7 @@ circuit:
         # --- Subida + izquierda cerrada (señal existente, despejamos) ---
         {command: "O", img: "curva.flip", step: 30.0, offset: 32.0, x: -1.3, collidable: true},
 
-        {command: "merge", op1: {command: "CHL", segments: 25}, op2: {command: "H", segments: 25}},
+        {command: "R", segments: 25, curve: "CHL", height: "H"},
         {command: "O", img: "quitamiedos", step: 0.1, offset: 0.03, x: 1.3},
         {command: "O", img: "poste", step: 1.0, offset: 0.1, x: 1.3, profile: "poste"},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.5, random_x: -0.20, random_step: 0.9, collidable: false},
@@ -638,7 +638,7 @@ circuit:
         {command: "F", img: "arbol", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Recta ---
-        {command: "S", segments: 40},
+        {command: "R", segments: 40},
         {command: "O", img: "arbol.2", step: 7.0, offset: 0.0, x: -1.7, random_x: -0.25, random_step: 1.5},
         {command: "O", img: "arbol.3", step: 8.0, offset: 3.0, x: 1.7, random_x: 0.25, random_step: 1.5},
         {command: "O", img: "arbusto", step: 4.0, offset: 1.0, x: -1.45, random_x: -0.20, random_step: 0.9, collidable: false},
@@ -648,12 +648,12 @@ circuit:
         {command: "F", img: "arbol.4", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -6, x_rel: -0.3, speed: 11.0},
+        {command: "E", segment: -6, x_rel: -0.3, speed: 11.0, img: "enemigo.1"},
 
         # --- Última derecha cerrada ---
         {command: "O", img: "curva", step: 30.0, offset: 37.0, x: 1.3, collidable: true},
 
-        {command: "CHR", segments: 40},
+        {command: "R", segments: 40, curve: "CHR"},
         {command: "O", img: "quitamiedos", step: 0.1, offset: 0.03, x: -1.3},
         {command: "O", img: "poste", step: 1.0, offset: 0.1, x: -1.3, profile: "poste"},
         {command: "O", img: "arbol", step: 5.5, offset: 0.0, x: -1.55, random_x: -0.25, random_step: 1.0},
@@ -666,7 +666,7 @@ circuit:
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
         # --- Recta final (empieza a abrirse hacia la meta) ---
-        {command: "S", segments: 35},
+        {command: "R", segments: 35},
         {command: "O", img: "arbusto", step: 4.0, offset: 0.0, x: -1.5, random_x: -0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbusto", step: 4.5, offset: 2.0, x: 1.5, random_x: 0.20, random_step: 0.9, collidable: false},
         {command: "O", img: "arbol.3", step: 10.0, offset: 2.0, x: -2.0, random_x: -0.30, random_step: 2.0},
@@ -677,18 +677,18 @@ circuit:
         {command: "F", img: "arbol.2", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.3", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -15, x_rel: 0.3, speed: 12.0},
+        {command: "E", segment: -15, x_rel: 0.3, speed: 12.0, img: "enemigo.1"},
       ]
     - name: "meta_ultimo_tramo"
       data: [
-        {command: "CL", segments: 35},
-        {command: "S", segments: 60},
+        {command: "R", segments: 35, curve: "CL"},
+        {command: "R", segments: 60, w1: 2.0},
         {command: "V", img: "vegetacion.3", x: 4.0, step_x: 1.3, step_z: 8.0, offset: 1.0, number: 1},
         {command: "F", img: "arbol.4", x: 5.5, step_x: 1.3, step_z: 9.0, offset: 1.5, number: 1, random_x: 0.65, random_step: 3.0},
         {command: "F", img: "arbol.3", x: 10.0, step_x: 1.0, step_z: 2.5, offset: 0.0, number: 1, random_x: 0.75, random_step: 1.5},
         {command: "F", img: "arbol.2", x: 15.0, step_x: 2.0, step_z: 7.0, offset: 1.0, number: 1, random_x: 1.50, random_step: 4.0},
 
-        {command: "E", segment: -20, x_rel: -0.25, speed: 12.5},
+        {command: "E", segment: -20, x_rel: -0.25, speed: 12.5, img: "enemigo.2"},
 
         {command: "MK", segment: -40, img: "flecha.1", x: -0.25, z: 0.0, w: 0.5, h: 1.0},
         {command: "MK", segment: -41, img: "flecha.2", x: -0.25, z: 0.0, w: 0.5, h: 1.0},

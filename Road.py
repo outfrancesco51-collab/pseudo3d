@@ -13,8 +13,8 @@ class Segment:
         self.events = []
         self.w0=w0
         self.w1=w1
-        #self.heading=math.atan2(curve,height)
-
+        self.offset=0.0
+        self.heading=0.0
 class VisibleSegment:
     def __init__(self,s:Segment,origin,playerx=None,playery=None):
         if origin!=None:
@@ -61,8 +61,8 @@ class Line:
         if color!=None:
             w0=vs.w0
             w1=vs.w1
-            x1=pc1.x+((self.position*w0+self.x)*pc1.z)
-            x4=pc2.x+((self.position*w1+self.x)*pc2.z)
+            x1=pc1.x+((self.position*w1+self.x)*pc1.z)
+            x4=pc2.x+((self.position*w0+self.x)*pc2.z)
             x2=x1+(self.width*pc1.z)
             x3=x4+(self.width*pc2.z)
             y1=pc1.y
@@ -72,12 +72,22 @@ class Line:
             puntos=((x1,y1),(x2,y2),(x3,y3),(x4,y4))
             return (puntos,color)
 
+class Branch:
+    def __init__(self,first_index,offset=0.0,heading=0.0):
+        self.first_index=first_index
+        self.segments=[]
+        self.offset=offset       # estado de parseo: con qué offset/heading continúa la rama
+        self.heading=heading
 
-
-
+    def get(self,index):
+        i=index-self.first_index
+        if 0<=i<len(self.segments):
+            return self.segments[i]
+        return None
 class Road:
     def __init__(self):
-        self.segments=[]
+        self.branches=[Branch(0)]
+        self.segments=self.branches[0].segments   # atajo: la misma lista que la rama 0
         self.current_segment=0
         self.objects=[]
         self.current_object=0
@@ -109,4 +119,5 @@ class Road:
             if item[0]<=index and item[1]>=index:
                 lineas.append(self.lines[i])
         return lineas
+
 
